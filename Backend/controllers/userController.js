@@ -48,6 +48,16 @@ const userController = {
       res.status(500).json({ error: err.message });
     }
   },
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await User.find().sort({ createdAt: -1 }); // 최신 순으로 정렬
+      res.json(users);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
+  
 };
+
 
 module.exports = userController;

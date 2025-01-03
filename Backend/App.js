@@ -5,7 +5,8 @@ require('dotenv').config();
 
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
-const commentRoutes = require('./routes/commentRoutes');
+const commentRoutes = require('./routes/commentRoutes')
+const chatbotRoutes = require('./routes/chatbotRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/posts/:postId/comments', commentRoutes);
+app.use('/chat', chatbotRoutes);
 
 // Default Route
 app.get('/', (req, res) => {
@@ -29,6 +31,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message });
 });
 
+
+
 // Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT,'0.0.0.0', () => console.log(`Server running on http://localhost:${PORT}`));
