@@ -1,0 +1,60 @@
+.feedback-page { /*페이지 전체 레이아웃*/
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.search-bar { /*검색 바 컨테이너 스타일링*/
+    display: flex; /*내부요소 플렉스 박스로 정렬*/
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /*클릭 커서 표시*/
+}
+
+.create-post button {
+    background-color: #4CAF50; /*버튼 배경색*/
+    color: white; /*버튼 텍스트*/
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.post-list { /*게시물 목록*/
+    border-top: 2px solid #ccc; /*맨 위 두꺼운 회색 경계선*/
+    padding-top: 20px; /*목록 맨 위 20px 여백*/
+}
+
+.post { /*개별 게시물*/
+    padding-bottom: 20px;/*게시물 아래쪽 여백*/
+    margin-bottom: 20px; /*게시물 사이 여백*/
+    border-bottom: 1px solid #eee; /*게시물 아래 연한 회색*/
+}
+
+.post h3 { /*게시물 제목*/
+    margin: 0; 
+    color: #333; /*제목 글자*/
+}
+
+.post p { /*게시물 여백*/
+    margin: 5px 0; /*상하 여백*/
+}

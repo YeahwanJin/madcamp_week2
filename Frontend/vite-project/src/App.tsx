@@ -1,18 +1,24 @@
-//루트 컴포넌트 정의
+// App.tsx
+
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import './App.css';
-import MyPage from './Mypage';
+import './styles/App.css';
+import MyPage from './pages/Mypage';
+import Feedback from './pages/Feedback';
+import Navbar from "./components/Navbar"; // Navbar 컴포넌트 임포트
+import Write from "./components/Write";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <Router>
-    
-        <Routes> // 홈 화면
+      <div>
+        <Navbar /> {/* Navbar 컴포넌트를 삽입 */} {/*라우터 경로 안에 전역배치*/}
+        <Routes>
+          {/* 홈 화면 */}
           <Route path="/" element={
             <>
               <div>
@@ -37,9 +43,14 @@ function App() {
               </p>
             </>
           } />
-          <Route path="/mypage" element={<MyPage />} /> //마이페이지
+          {/* 마이페이지 */}
+          <Route path="/mypage" element={<MyPage />} />
+          {/* 피드백 페이지 */}
+          <Route path="/feedback" element={<Feedback />} />
+          {/* Write.tsx 경로 추가 */}
+          <Route path="/write" element={<Write />} /> 
         </Routes>
-
+      </div>
     </Router>
   );
 }

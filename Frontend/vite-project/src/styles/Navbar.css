@@ -1,0 +1,46 @@
+/* src/components/Navbar.css */
+
+.navbar {
+    display: flex; /*로고 링크 정렬*/
+    align-items: center;
+    gap: 50px;
+    padding: 10px 30px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed; /*화면 상단 고정*/
+    left: 0; /* 화면 좌측 고정 */
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+  }
+  
+  .navbar-logo .home-button {
+    width: 40px;
+    height: 40px;
+    background-color: #d3d3d3; /* 회색 동그라미 */
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .navbar-links {
+    align-items: start; /*배부 링크들 일정 간격 배열*/
+    gap: 20px;
+    justify-content: space-evenly;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    margin-right: 20px;
+  }
+  
+  .navbar-links a:hover {
+    color: #000000; /* 호버 시 파란색 */
+    font-weight: bold; /* 글씨를 더 굵게 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 살짝 진해 보이는 효과 */
+  }
+  
