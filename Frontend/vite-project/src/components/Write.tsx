@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate 가져오기
 import "../styles/Write.css"; // CSS 파일 가져오기
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Font Awesome 아이콘 가져오기
 import { faPlus } from "@fortawesome/free-solid-svg-icons"; // "+" 아이콘 가져오기
@@ -9,8 +10,11 @@ const Write: React.FC = () => {
   const [content, setContent] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
 
+  // 네비게이션 훅
+  const navigate = useNavigate();
+
   // 임의의 고정된 authorId
-  const authorId = "6777ba30edfac6e2bdcf5ef2";
+  const authorId = "677a32f4ae0a8ba26c65c9f0";
 
   // 제목 입력 핸들러
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +67,9 @@ const Write: React.FC = () => {
       setTitle("");
       setContent("");
       setVideoUrl("");
+
+      // /posts 페이지로 이동
+      navigate("/posts");
     } catch (error) {
       console.error("Error:", error);
       alert("업로드 중 오류가 발생했습니다.");

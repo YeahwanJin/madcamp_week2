@@ -26,21 +26,30 @@ const PostDetails: React.FC = () => {
   const [pointsGiven, setPointsGiven] = useState<number>(5);
   const commenterId = "677a32f4ae0a8ba26c65c9f0"; // 고정된 commenterId
 
+  // 게시글 및 댓글 데이터 가져오기
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchPostAndComments = async () => {
       if (postId) {
         try {
-          const response = await axios.get(`http://143.248.194.196:3000/posts/${postId}`);
-          setPost(response.data);
+          // 게시글 데이터 가져오기
+          const postResponse = await axios.get(`http://143.248.194.196:3000/posts/${postId}`);
+          setPost(postResponse.data);
+
+          // 댓글 데이터 가져오기
+          const commentsResponse = await axios.get(
+            `http://143.248.194.196:3000/posts/${postId}/comments`
+          );
+          setComments(commentsResponse.data); // 댓글 리스트 업데이트
         } catch (error) {
-          console.error("Failed to fetch post:", error);
+          console.error("Failed to fetch data:", error);
         }
       }
     };
 
-    fetchPost();
+    fetchPostAndComments();
   }, [postId]);
 
+  // 댓글 작성 핸들러
   const handleCommentSubmit = async () => {
     try {
       if (!commentContent.trim()) {
