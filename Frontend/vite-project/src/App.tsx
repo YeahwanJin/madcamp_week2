@@ -9,6 +9,7 @@ import Write from "./components/Write";
 import Login from "./pages/Login";
 import Postpage1 from "./components/Postpage1";
 <Route path="/postpage" element={<Postpage1 />} />
+import Chatbot from "./components/Chatbot.tsx"
 import VideoCarousel from "./components/VideoCarousel"; // VideoCarousel 컴포넌트 임포트
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/write" element={<Write />} />
           <Route path="/login" element={<Login />} />
           <Route path="/posts/:id" element={<Postpage1 />} />
+          <Route path="/chatbot" element={<Chatbot />} />
         </Routes>
       </div>
     </Router>
