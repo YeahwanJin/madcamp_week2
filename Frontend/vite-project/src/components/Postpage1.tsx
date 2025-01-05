@@ -10,9 +10,9 @@ interface Comment {
     username: string;
 }
 
-const Postpage: React.FC = () => {
+const Postpage1: React.FC = () => {
     const location = useLocation();
-    const { username, title, content } = location.state || {};
+    const { username = "Unknown User", title = "제목 없음", content = "내용 없음" } = location.state || {};
 
     // 임의의 고정된 authorId
   const authorId = "677a32f4ae0a8ba26c65c9f0";
@@ -147,4 +147,4 @@ const Postpage: React.FC = () => {
     );
 };
 
-export default Postpage;
+export default Postpage1;

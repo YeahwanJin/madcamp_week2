@@ -1,0 +1,70 @@
+.video-carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden; /* 스크롤바 숨기기 */
+}
+
+.carousel-container {
+  display: flex;
+  gap: 24px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  width: 100%;
+  position: relative;
+}
+
+.video-item {
+  flex: 0 0 350px; /* 썸네일의 크기 고정 (너비 조정) */
+  height: 200px; /* 컨테이너 높이 고정 */
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden; /* 이미지를 컨테이너 내부로 제한 */
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.video-item:hover {
+  transform: scale(1.05); /* 컨테이너 확대 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.video-item img {
+  width: 100%; /* 컨테이너 너비에 맞춤 */
+  height: 100%; /* 컨테이너 높이에 맞춤 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 꽉 채움 */
+  display: block;
+}
+
+.scroll-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.scroll-button.left {
+  left: 16px;
+}
+
+.scroll-button.right {
+  right: 16px;
+}
+
+.scroll-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
