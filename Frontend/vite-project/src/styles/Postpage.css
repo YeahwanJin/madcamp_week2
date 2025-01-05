@@ -1,0 +1,141 @@
+/* 전체 페이지 컨테이너 스타일 */
+
+.post-page{
+    width: 80%;
+}
+
+/* 게시물 상단의 헤더 스타일 */
+.post-header {
+    margin-top: -80px; /*상대적으로 위로 옮기기*/
+    display: flex; /* 아이템을 가로로 정렬 */
+    align-items: center; /* 아이템을 수직 가운데 정렬 */
+    gap: 20px; /* 아이템 간의 간격 */
+    margin-bottom: 20px; /* 헤더 아래쪽 여백 */
+    border-bottom: 1px solid #bdbbbb; /* 헤더 하단 경계선 */
+    padding-bottom: 10px; /* 경계선과 내용 사이 여백 */
+    padding-right: 700px; /* 왼쪽 끝에서 280px 떨어지도록 설정 */
+    max-width: calc(100vw - 280px); /* 반응형으로 남은 공간을 채움 */
+    box-sizing: border-box; /* padding 포함한 크기 계산 */
+}
+
+
+
+/* 사용자 프로필 아이콘 (아바타) */
+.user-avatar {
+    width: 50px; /* 아바타 너비 */
+    height: 50px; /* 아바타 높이 */
+    background-color: #b8f397; /* 아바타 배경색 */
+    border-radius: 50%; /* 원형 모양 */
+}
+
+/* 사용자 정보 텍스트 스타일 */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+/* 사용자 이름 텍스트 스타일 */
+.username {
+    font-size: 18px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: #333; /* 글자 색상 */
+}
+
+/* 사용자 레벨 텍스트 스타일 */
+.user-level {
+    font-size: 14px; /* 글자 크기 */
+    color: #555; /* 글자 색상 */
+}
+
+/* 게시물 내용 전체 컨테이너 */
+.post-details {
+    margin-top: 20px; /* 위쪽 여백 */
+    margin-top: 40px;
+}
+
+/* 게시물 제목 스타일 */
+.post-details .post-title {
+    text-align: left;
+    font-size: 18px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: #555; /* 글자 색상 */
+}
+
+/* 게시물 본문 내용 스타일 */
+.post-details .post-content {
+    font-size: 16px; /* 글자 크기 */
+    color: #777; /* 글자 색상 */
+    margin-top: 10px; /* 위쪽 여백 */
+    text-align: left; /* 본문 텍스트 왼쪽 정렬 */
+    line-height: 1.5; /* 가독성을 위해 줄 간격 추가 */
+}
+
+/* 좋아요 및 댓글 버튼 컨테이너 */
+.post-actions {
+    display: flex; /* 버튼을 가로로 정렬 */
+    gap: 15px; /* 버튼 간의 간격 */
+    margin-top: 20px; /* 위쪽 여백 */
+    font-size: 16px; /* 버튼 글자 크기 */
+    color: #555; /* 버튼 글자 색상 */
+    cursor: pointer; /* 마우스를 올렸을 때 클릭 가능한 커서 표시 */
+}
+
+/* 댓글 입력 섹션 */
+.comment-section {
+    margin-top: 100px; /* 위쪽 여백 */
+}
+
+/* 댓글 입력 필드 */
+.comment-input {
+    width: 100%; /* 입력 필드 너비를 부모 요소에 맞춤 */
+    height: 40px; /* 입력 필드 높이 */
+    padding: 10px; /* 입력 필드 내부 여백 */
+    border: 1px solid #ddd; /* 입력 필드 경계선 */
+    border-radius: 5px; /* 입력 필드 테두리를 둥글게 */
+    margin-bottom: 10px; /* 아래쪽 여백 */
+}
+
+/* 댓글 버튼 컨테이너 */
+.comment-buttons {
+    display: flex; /* 버튼을 가로로 정렬 */
+    justify-content: flex-end; /* 버튼을 오른쪽 정렬 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+/* 취소 버튼 스타일 */
+.cancel-button {
+    background-color: transparent; /* 배경색 제거 */
+    border: 1px solid gray; /* 회색 테두리 */
+    color: gray; /* 글자 색상 */
+    padding: 5px 10px; /* 버튼 내부 여백 */
+    border-radius: 5px; /* 버튼 테두리를 둥글게 */
+    cursor: pointer; /* 마우스를 올렸을 때 클릭 가능한 커서 표시 */
+}
+
+/* 댓글 추가 버튼 스타일 */
+.add-comment-button {
+    background-color: navy; /* 배경색을 네이비로 설정 */
+    border: none; /* 테두리 제거 */
+    color: white; /* 글자 색상을 흰색으로 설정 */
+    padding: 5px 10px; /* 버튼 내부 여백 */
+    border-radius: 5px; /* 버튼 테두리를 둥글게 */
+    cursor: pointer; /* 마우스를 올렸을 때 클릭 가능한 커서 표시 */
+}
+
+.point-selection {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.point-button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 14px;
+}

@@ -10,7 +10,7 @@ const Write: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>("");
 
   // 임의의 고정된 authorId
-  const authorId = "6777ba30edfac6e2bdcf5ef2";
+  const authorId = "677a32f4ae0a8ba26c65c9f0";
 
   // 제목 입력 핸들러
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
