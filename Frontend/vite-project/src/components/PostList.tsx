@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface Post {
   _id: string;
@@ -11,6 +12,7 @@ interface Post {
 const PostList: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [query, setQuery] = useState("");
+  const navigate = useNavigate(); // useNavigate 훅
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -38,16 +40,23 @@ const PostList: React.FC = () => {
     }
   };
 
+  const handleWriteButtonClick = () => {
+    navigate("/write"); // /write 경로로 이동
+  };
+
   return (
     <div>
       <h1>포스트 목록</h1>
-      <input
-        type="text"
-        placeholder="검색어를 입력하세요..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>검색</button>
+      <div>
+        <input
+          type="text"
+          placeholder="검색어를 입력하세요..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button onClick={handleSearch}>검색</button>
+        <button onClick={handleWriteButtonClick}>글 작성</button> {/* 글 작성 버튼 추가 */}
+      </div>
       <ul>
         {posts.map((post) => (
           <li key={post._id}>
