@@ -1,150 +1,160 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import "../styles/Postpage.css";
 
+interface Post {
+  _id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  authorId: string;
+}
+
 interface Comment {
-    id: number;
-    content: string;
-    pointsGiven: number;
-    authorId: string; 
-    username: string;
+  _id: string;
+  content: string;
+  createdAt: string;
+  pointsGiven: number;
 }
 
 const Postpage1: React.FC = () => {
-    const location = useLocation();
-    const { username = "Unknown User", title = "제목 없음", content = "내용 없음" } = location.state || {};
+  const { id: postId } = useParams<{ id: string }>();
+  const [post, setPost] = useState<Post | null>(null); // 게시물 데이터 상태
+  const [comments, setComments] = useState<Comment[]>([]); // 댓글 데이터 상태
+  const [commentContent, setCommentContent] = useState(""); // 댓글 입력 상태
+  const [pointsGiven, setPointsGiven] = useState<number>(5); // 포인트 입력 상태
+  const commenterId = "677a32f4ae0a8ba26c65c9f0"; // 고정된 commenterId
 
-    // 임의의 고정된 authorId
-  const authorId = "677a32f4ae0a8ba26c65c9f0";
-
-    const [commentInput, setCommentInput] = useState<string>(""); // 댓글 입력 필드 상태
-    const [selectedPoint, setSelectedPoint] = useState<number | null>(null); // 선택한 포인트
-    const [comments, setComments] = useState<Comment[]>([]); // 댓글 목록
-
-    // 백엔드에서 댓글 데이터 가져오기
-    useEffect(() => {
-        fetchComments();
-    }, []);
-
-    const fetchComments = async () => {
+  // 게시물 및 댓글 데이터 가져오기
+  useEffect(() => {
+    const fetchPostAndComments = async () => {
+      if (postId) {
         try {
-            const response = await fetch("http://143.248.194.196:3000/posts/677a3d5bd10892c517a9e0e2/comments");
-            const data = await response.json();
-            setComments(data); // 백엔드에서 받은 댓글 데이터 설정
+          // 게시물 데이터 가져오기
+          const postResponse = await axios.get(
+            `http://143.248.194.196:3000/posts/${postId}`
+          );
+          setPost(postResponse.data);
+
+          // 댓글 데이터 가져오기
+          const commentsResponse = await axios.get(
+            `http://143.248.194.196:3000/posts/${postId}/comments`
+          );
+          setComments(commentsResponse.data);
         } catch (error) {
-            console.error("Failed to fetch comments:", error);
+          console.error("Failed to fetch post or comments:", error);
         }
+      }
     };
 
-    // 댓글 추가 핸들러
-    const handleAddComment = async () => {
-        if (!commentInput.trim() || selectedPoint === null) {
-            alert("댓글 내용과 포인트를 입력해주세요.");
-            return;
-        }
+    fetchPostAndComments();
+  }, [postId]);
 
-        try {
-            const newComment = {
-                postId: "677a3d5bd10892c517a9e0e2",
-                content: commentInput,
-                pointsGiven: selectedPoint,
-                username: "현재 사용자", // 사용자 이름을 동적으로 설정
-                authorId,
-            };
+  // 댓글 작성 핸들러
+  const handleCommentSubmit = async () => {
+    if (!commentContent.trim()) {
+      alert("댓글 내용을 입력해주세요.");
+      return;
+    }
 
-            const response = await fetch("http://143.248.194.196:3000/posts/677a3d5bd10892c517a9e0e2/comments", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newComment),
-            });
+    if (!post || !post.authorId) {
+      alert("게시글 정보를 불러오는 데 실패했습니다.");
+      return;
+    }
 
-            if (response.ok) {
-                // 댓글 추가 성공 시 목록 갱신
-                fetchComments();
-                setCommentInput(""); // 입력 필드 초기화
-                setSelectedPoint(null); // 포인트 초기화
-            } else {
-                alert("댓글 추가에 실패했습니다.");
-            }
-        } catch (error) {
-            console.error("Failed to add comment:", error);
-        }
+    const payload = {
+      postId,
+      commenterId,
+      content: commentContent,
+      pointsGiven,
+      postAuthorId: post.authorId,
     };
 
-    // 댓글 입력 취소 핸들러
-    const handleCancelComment = () => {
-        setCommentInput(""); // 입력 필드 초기화
-        setSelectedPoint(null); // 포인트 초기화
-    };
+    try {
+      const response = await axios.post(
+        `http://143.248.194.196:3000/posts/${postId}/comments`,
+        payload
+      );
 
-    return (
-        <div className="post-page">
-            <div className="post-header">
-                <div className="user-avatar"></div>
-                <div className="user-info">
-                    <p className="username">{username}</p>
-                    <p className="user-level">User Level</p>
-                </div>
-            </div>
-            <div className="post-details">
-                <h3 className="post-title">{title}</h3>
-                <p className="post-content">{content}</p>
-            </div>
-            <div className="post-actions">
-                <span className="like-icon">👍</span>
-                <span className="comment-icon">💬</span>
-            </div>
-            <div className="comment-section">
-                <input
-                    type="text"
-                    className="comment-input"
-                    placeholder="댓글 입력*"
-                    value={commentInput}
-                    onChange={(e) => setCommentInput(e.target.value)}
-                />
-                <div className="point-selection">
-                    <label>지급할 포인트:</label>
-                    {[1, 2, 3, 4, 5].map((point) => (
-                        <button
-                            key={point}
-                            className={`point-button ${
-                                selectedPoint === point ? "selected" : ""
-                            }`}
-                            onClick={() => setSelectedPoint(point)}
-                        >
-                            {point}
-                        </button>
-                    ))}
-                </div>
-                <div className="comment-buttons">
-                    <button
-                        className="cancel-button"
-                        onClick={handleCancelComment}
-                    >
-                        취소
-                    </button>
-                    <button
-                        className="add-comment-button"
-                        onClick={handleAddComment}
-                    >
-                        + 댓글추가
-                    </button>
-                </div>
-                <div className="comment-list">
-                    {comments.map((comment) => (
-                        <div key={comment.id} className="comment-item">
-                            <p>
-                                <strong>{comment.username}</strong>: {comment.content}
-                            </p>
-                            <p>포인트: {comment.pointsGiven}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+      // 댓글 추가 후 상태 업데이트
+      setComments((prev) => [...prev, response.data.comment]);
+      setCommentContent(""); // 입력 필드 초기화
+      setPointsGiven(5); // 포인트 초기화
+    } catch (error) {
+      console.error("Failed to submit comment:", error);
+      alert("댓글 작성에 실패했습니다.");
+    }
+  };
+
+  // 댓글 입력 취소 핸들러
+  const handleCancelComment = () => {
+    setCommentContent(""); // 입력 필드 초기화
+    setPointsGiven(5); // 포인트 초기화
+  };
+
+  if (!post) {
+    return <p>로딩 중...</p>;
+  }
+
+  return (
+    <div className="post-page">
+      {/* 게시물 정보 */}
+      <div className="post-header">
+        <h1 className="post-title">{post.title}</h1>
+        <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
+        <p className="post-content">{post.content}</p>
+      </div>
+
+      {/* 댓글 섹션 */}
+      <div className="comment-section">
+        <h2>댓글</h2>
+        <ul className="comment-list">
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <li key={comment._id} className="comment-item">
+                <p>{comment.content}</p>
+                <p>포인트: {comment.pointsGiven}</p>
+                <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+              </li>
+            ))
+          ) : (
+            <p>아직 댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
+          )}
+        </ul>
+
+        {/* 댓글 작성 UI */}
+        <h3>댓글 작성</h3>
+        <textarea
+          className="comment-input"
+          placeholder="댓글 내용을 입력하세요..."
+          value={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
+          rows={3}
+        />
+        <div className="point-selection">
+          <label>지급할 포인트:</label>
+          {[1, 2, 3, 4, 5].map((point) => (
+            <button
+              key={point}
+              className={`point-button ${pointsGiven === point ? "selected" : ""}`}
+              onClick={() => setPointsGiven(point)}
+            >
+              {point}
+            </button>
+          ))}
         </div>
-    );
+        <div className="comment-buttons">
+          <button className="cancel-button" onClick={handleCancelComment}>
+            취소
+          </button>
+          <button className="add-comment-button" onClick={handleCommentSubmit}>
+            + 댓글추가
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Postpage1;

@@ -23,7 +23,7 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/write" element={<Write />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/postpage1" element={<Postpage1 />} />
+          <Route path="/posts/:id" element={<Postpage1 />} />
         </Routes>
       </div>
     </Router>
