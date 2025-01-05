@@ -16,7 +16,7 @@ const UserRankingBox: React.FC = () => {
   useEffect(() => {
     const fetchRankings = async () => {
       try {
-        const response = await fetch('http://143.248.194.196:3000/rankings');
+        const response = await fetch('http://143.248.194.196:3000/users/rankings');
         if (!response.ok) throw new Error('랭킹 데이터 호출 실패');
         const data: RankingData[] = await response.json();
         setRankings(data);
