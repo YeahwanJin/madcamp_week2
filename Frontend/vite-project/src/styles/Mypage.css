@@ -1,35 +1,7 @@
 .my-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between; /* 좌우 배치 */
+    align-items: flex-start;
     padding: 20px;
-  }
-  
-
-  
-  .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 50px; /* 내부 여백 증가 */
-    width: 400px; /* 너비 유지 */
-    height: 450px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-icon {
-    font-size:200px; /* 아이콘 크기 크게 변경 */
-    margin-bottom: 100px; /* 아이콘과 텍스트 사이 간격 확대 */
-  
-  }
-  
-  .user-info p {
-    font-size: 20px; /* 글자 크기 유지 */
-    margin: 10px 0; /* 텍스트 간 간격 증가 */
-  }
-  
-  .user-info strong {
-    font-weight: bold;
+    gap: 20px;
   }
