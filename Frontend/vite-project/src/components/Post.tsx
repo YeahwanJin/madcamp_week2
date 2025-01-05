@@ -4,6 +4,7 @@ import "../styles/Feedback.css"; // 필요 시 CSS 가져오기
 
 interface PostProps { /*Post인터페이스 정의
     질문: postType과 함께 있어도 되는가*/
+    key: string;
     username: string;
     title: string;
     content: string;

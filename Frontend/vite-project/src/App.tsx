@@ -10,6 +10,8 @@ import Feedback from './pages/Feedback';
 import Navbar from "./components/Navbar"; // Navbar 컴포넌트 임포트
 import Write from "./components/Write";
 import Login from "./pages/Login";
+import PostList from "./components/PostList";
+import PostDetails from "./components/PostDetails.tsx";
 
 
 function App() {
@@ -53,7 +55,10 @@ function App() {
           <Route path="/write" element={<Write />} />
           {/* Login.tsx 경로 추가 */}
           <Route path="/login" element={<Login />} />  
+          <Route path="/posts" element={<PostList />} />
+           <Route path="/posts/:id" element={<PostDetails />} />
         </Routes>
+
       </div>
     </Router>
   );

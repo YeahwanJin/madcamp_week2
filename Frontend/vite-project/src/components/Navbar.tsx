@@ -17,7 +17,9 @@ function Navbar() {
           <Link to="/" className="home-button"></Link> {/* 회색 동그라미 버튼 */}
         </div>
         <div className="navbar-links"> {/* 메뉴 버튼들 */}
-          <Link to="/feedback">Feedback</Link>
+         
+          <Link to="/posts">posts</Link>
+          
           <Link to="/mypage">Mypage</Link>
           {/* Chatbot 메뉴 */}
           <span className="navbar-chatbot" onClick={toggleChatbot}>
