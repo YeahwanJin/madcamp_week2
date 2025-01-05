@@ -9,6 +9,8 @@ import MyPage from './pages/Mypage';
 import Feedback from './pages/Feedback';
 import Navbar from "./components/Navbar"; // Navbar 컴포넌트 임포트
 import Write from "./components/Write";
+import Login from "./pages/Login";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -48,7 +50,9 @@ function App() {
           {/* 피드백 페이지 */}
           <Route path="/feedback" element={<Feedback />} />
           {/* Write.tsx 경로 추가 */}
-          <Route path="/write" element={<Write />} /> 
+          <Route path="/write" element={<Write />} />
+          {/* Login.tsx 경로 추가 */}
+          <Route path="/login" element={<Login />} />  
         </Routes>
       </div>
     </Router>

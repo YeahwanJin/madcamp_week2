@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Write.css"; // CSS 파일 가져오기
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Font Awesome 아이콘 가져오기
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; // "+" 아이콘 가져오기
 
 const Write: React.FC = () => {
   // 상태 관리
@@ -71,7 +73,6 @@ const Write: React.FC = () => {
     <div className="write-container">
       <h2>글 작성</h2>
       <div className="input-container">
-        <label>제목 입력</label>
         <input
           className="title-input"
           type="text"
@@ -81,7 +82,6 @@ const Write: React.FC = () => {
         />
       </div>
       <div className="textarea-container">
-        <label>내용 입력</label>
         <textarea
           className="content-input"
           placeholder="내용 입력"
@@ -90,7 +90,6 @@ const Write: React.FC = () => {
         ></textarea>
       </div>
       <div className="input-container">
-        <label>비디오 URL 입력</label>
         <input
           className="title-input"
           type="text"
@@ -100,7 +99,7 @@ const Write: React.FC = () => {
         />
       </div>
       <button className="upload-button" onClick={handleUpload}>
-        업로드
+          <FontAwesomeIcon icon={faPlus} className="icon" /> 업로드
       </button>
     </div>
   );

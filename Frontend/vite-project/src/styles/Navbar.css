@@ -29,13 +29,15 @@
     justify-content: space-evenly;
   }
   
-  .navbar-links a {
+  .navbar-links a, 
+  .navbar-links .navbar-chatbot{
     text-decoration: none;
     color: #000000;
     font-size: 16px;
     font-weight: 500;
     transition: color 0.3s ease;
     margin-right: 20px;
+    cursor: pointer; /* 포인터 커서 추가 */
   }
   
   .navbar-links a:hover {
@@ -43,4 +45,10 @@
     font-weight: bold; /* 글씨를 더 굵게 */
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 살짝 진해 보이는 효과 */
   }
+
+  .navbar-links .navbar-chatbot:hover { /* 호버 효과 */
+    color: #000000; /* 호버 시 색상 변경 */
+    font-weight: bold; /* 글씨를 더 굵게 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 살짝 진해 보이는 효과 */
+}
   

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"; // useNavigate 추가
 import '../styles/Feedback.css';
 import PostSearch from '../components/Search'; // Search.tsx 파일 가져오기
 import Post from "../components/Post"; // Post 컴포넌트 가져오기
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Font Awesome 아이콘 가져오기
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; // "+" 아이콘 가져오기
 
 interface PostType {
     id: number; // 게시물 ID
@@ -28,11 +30,11 @@ const Feedback = () => {
         <div className="feedback-page">
             <div className="search-bar">
                 <input type="text" placeholder="검색" />
-                <button>검색</button>
-                <PostSearch /> {/*PostSearch 컴포턴트*/}
-            </div>
-            <div className="create-post">
-                <button onClick={() => navigate("/write")}>글 작성</button>
+                <div className="create-post">
+                    <button onClick={() => navigate("/write")}>
+                        <FontAwesomeIcon icon={faPlus} className="icon" /> 글 작성
+                    </button>
+                </div>
             </div>
             <h1>Feedback</h1>
             <div className="post-list">
