@@ -9,21 +9,24 @@
 }
 
 .feedback-page h1 { /* Feedback 제목 */
-    position: absolute; /* 위치를 절대적으로 지정 */
-    top: 250px; /* 상단으로부터의 거리 */
-    left: 600px; /* 왼쪽으로부터의 거리 */
+    position: relative; /* 반응형으로 절대 위치 대신 상대 위치 사용 */
+    top: 0; /* 초기 상단 거리 제거 */
+    left: 0; /* 초기 왼쪽 거리 제거 */
     font-size: 24px; /* 글자 크기 */
     font-weight: bold; /* 글자 두께 */
     margin: 0; /* 여백 제거 */
+    padding-right: 500px; /* 왼쪽 끝에서 280px 떨어지도록 설정 */
+    max-width: calc(100vw - 280px); /* 반응형으로 남은 공간을 채움 */
+    box-sizing: border-box; /* padding 포함한 크기 계산 */
 }
 
 .search-bar { /* 검색 바와 버튼을 포함하는 컨테이너 */
-    position: absolute;  /* 위치를 절대적으로 지정 */
+    margin-top: -200px; /*상대적으로 위로 옮기기*/
     display: flex; /* 내부 요소를 가로로 배열 */
-    top: 120px;          /* 상단으로부터의 거리 */
-    left: 960px;         /* 왼쪽으로부터의 거리 */
-    margin-bottom: 20px; /* 아래쪽 여백 */
+    justify-content: flex-end;
     gap: 16px; /* 검색창과 버튼 사이 간격 */
+    margin-bottom: 20px;
+    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
 }
 
 .search-bar input { /* 검색 입력 필드 */
@@ -67,9 +70,6 @@
 .post-list { /*게시물 목록*/
     border-top: 2px solid #ccc; /*맨 위 두꺼운 회색 경계선*/
     padding-top: 20px; /*목록 맨 위 20px 여백*/
-    position: absolute; /* 위치를 절대적으로 지정 */
-    top: 300px; /* 상단으로부터의 거리 */
-    left: 560px; /* 왼쪽으로부터의 거리 */
     width: 800px; /* 고정된 너비 */
     height: 18px; /* 고정된 높이 */
     margin: 0 auto; /* 중앙 정렬 */

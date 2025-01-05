@@ -6,6 +6,7 @@ interface PostProps {
     username: string;
     title: string;
     content: string;
+    _id: string; 
 }
 
 const Post: React.FC<PostProps> = ({ username, title, content }) => {
