@@ -12,6 +12,7 @@ import Write from "./components/Write";
 import Login from "./pages/Login";
 import PostList from "./components/PostList";
 import PostDetails from "./components/PostDetails.tsx";
+import Chat from "./components/Chat.tsx"
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route path="/login" element={<Login />} />  
           <Route path="/posts" element={<PostList />} />
            <Route path="/posts/:id" element={<PostDetails />} />
+           <Route path="/chat" element={<Chat />} />
         </Routes>
 
       </div>
