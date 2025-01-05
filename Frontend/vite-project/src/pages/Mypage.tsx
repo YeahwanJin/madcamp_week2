@@ -1,37 +1,65 @@
-//마이페이지 컴포넌트 정의
 import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // 아이콘 라이브러리
+import { faStar, faCrown, faMedal, faUser } from '@fortawesome/free-solid-svg-icons'; // 아이콘 가져오기
+import '../styles/Mypage.css'; // 스타일링 파일
 
-interface PointsData { // pointsdata 객체, 숫자 형태이고 fetch로 받은 데이터가 올바른지 확인
+interface UserData {
+  name: string;
   points: number;
+  level: 'Bronze' | 'Silver' | 'Gold'; // 레벨 값 (문자열 리터럴)
 }
 
 const MyPage: React.FC = () => {
-  const [points, setPoints] = useState<number | null>(null); // 상태관리 훅, points 상태가 숫자 or NULL 상태 가질 수 있음
-  const [loading, setLoading] = useState<boolean>(true); // 상태관리 훅, points 상태가 True or False 상태 가질 수 있음
+  const [userData, setUserData] = useState<UserData | null>(null); // 사용자 데이터 상태
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
 
-  useEffect(() => { // 컴포넌트 랜더링, fetchpoint 함수 호출
-    const fetchPoints = async () => {
+  useEffect(() => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch('http://143.248.194.196:3000/users/67777656ef3c105029c06a2e'); // 실제 API 엔드포인트로 변경
+        const response = await fetch('http://143.248.194.196:3000/users/6777ba3cedfac6e2bdcf5ef4'); // 실제 API URL
         if (!response.ok) throw new Error('API 호출 실패');
-        const data: PointsData = await response.json();
-        setPoints(data.points); //성공하면 JSON으로 파싱하고, points 상태에 저장
-        setLoading(false);// loading 상태를 false로 변경하여 "로딩 중..."을 숨기고 데이터를 표시
+        const data: UserData = await response.json();
+        setUserData(data);
+        setLoading(false);
       } catch (error) {
-        console.error('포인트 데이터를 가져오는 중 에러 발생:', error);
-        setLoading(false);  
+        console.error('사용자 데이터를 가져오는 중 에러 발생:', error);
+        setLoading(false);
       }
     };
 
-    fetchPoints();
+    fetchUserData();
   }, []);
 
-  if (loading) return <div>로딩 중...</div>; //조건부 랜더링: 데이터가 아직 로딩 중일 때, "로딩 중..."이라는 메시지를 보여줌
+  // 레벨에 따른 아이콘 결정 함수
+  const getUserIcon = (level: 'Bronze' | 'Silver' | 'Gold') => {
+    switch (level) {
+      case 'Gold':
+        return { icon: faCrown, color: '#FFD700' }; // 금색 왕관
+      case 'Silver':
+        return { icon: faMedal, color: '#C0C0C0' }; // 은색 메달
+      case 'Bronze':
+        return { icon: faStar, color: '#CD7F32' }; // 동색 별
+      default:
+        return { icon: faUser, color: '#000000' }; // 기본 아이콘
+    }
+  };
 
-  return ( //데이터 랜더링이 완료된 후: points가 null이 아니면 그 값을 표시하고, null이면 "정보 없음"을 표시
-    <div>
-      <h1>마이페이지</h1>
-      <p>현재 포인트: {points !== null ? points : '정보 없음'}</p>
+  if (loading) return <div>로딩 중...</div>;
+  if (!userData)
+    return <div>사용자 정보를 가져올 수 없습니다. 다시 시도해주세요.</div>;
+
+  const { name, points, level } = userData;
+  const { icon, color } = getUserIcon(level);
+
+  return (
+    <div className="my-page">
+      
+      <div className="user-info">
+        <FontAwesomeIcon icon={icon} className="user-icon" style={{ color }} />
+        <p><strong>이름:</strong> { name}</p>
+        <p><strong>포인트:</strong> { points}</p>
+        <p><strong>등급:</strong> { level}</p>
+      </div>
     </div>
   );
 };
