@@ -16,8 +16,18 @@ const MyPage: React.FC = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      // 세션에서 사용자 정보 가져오기
+      const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+      const userId = user._id;
+
+      if (!userId) {
+        console.error('세션에 사용자 ID가 없습니다.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await fetch('http://143.248.194.196:3000/users/677a32f4ae0a8ba26c65c9f0');
+        const response = await fetch(`http://143.248.194.196:3000/users/${userId}`);
         if (!response.ok) throw new Error('API 호출 실패');
         const data: UserData = await response.json();
         setUserData(data);
@@ -39,8 +49,7 @@ const MyPage: React.FC = () => {
   return (
     <div className="my-page">
       <UserInfoBox name={name} points={points} level={level} />
-      <UserRankingBox/>
-     
+      <UserRankingBox />
     </div>
   );
 };
