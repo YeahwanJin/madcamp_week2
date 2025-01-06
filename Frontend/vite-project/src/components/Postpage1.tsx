@@ -24,30 +24,31 @@ interface Comment {
     name: string; // 댓글 작성자의 이름
   };
 }
-  //const commenter = JSON.parse(sessionStorage.getItem("user") || "{}");
-  //const commenterId=commenter._id || null; // 사용자 ID 추출
 
 const Postpage1: React.FC = () => {
   const { id: postId } = useParams<{ id: string }>();
-  const [post, setPost] = useState<Post | null>(null); // 게시물 데이터 상태
-  const [comments, setComments] = useState<Comment[]>([]); // 댓글 데이터 상태
-  const [commentContent, setCommentContent] = useState(""); // 댓글 입력 상태
-  const [pointsGiven, setPointsGiven] = useState<number>(5); // 포인트 입력 상태
-  const commenterId = "677a32f4ae0a8ba26c65c9f0"; // 고정된 commenterId
-  
+  const [post, setPost] = useState<Post | null>(null); 
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentContent, setCommentContent] = useState("");
+  const [pointsGiven, setPointsGiven] = useState<number>(5);
 
-  // 게시물 및 댓글 데이터 가져오기
+  // sessionStorage에서 user 정보를 가져온다고 가정
+  const storedUser = sessionStorage.getItem("user");
+  // 만약 user가 저장되어 있지 않으면 null 반환
+  const commenter = storedUser ? JSON.parse(storedUser) : null;
+  const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
+
   useEffect(() => {
+    console.log("commenter:", commenter); // 콘솔로 실제 값 확인
+
     const fetchPostAndComments = async () => {
       if (postId) {
         try {
-          // 게시물 데이터 가져오기
           const postResponse = await axios.get(
             `http://143.248.194.196:3000/posts/${postId}`
           );
           setPost(postResponse.data);
 
-          // 댓글 데이터 가져오기
           const commentsResponse = await axios.get(
             `http://143.248.194.196:3000/posts/${postId}/comments`
           );
@@ -61,7 +62,6 @@ const Postpage1: React.FC = () => {
     fetchPostAndComments();
   }, [postId]);
 
-  // 댓글 작성 핸들러
   const handleCommentSubmit = async () => {
     if (!commentContent.trim()) {
       alert("댓글 내용을 입력해주세요.");
@@ -72,6 +72,9 @@ const Postpage1: React.FC = () => {
       alert("게시글 정보를 불러오는 데 실패했습니다.");
       return;
     }
+
+    // commenterId가 정상적인 값인지 콘솔로 확인
+    console.log("댓글 작성 시 commenterId:", commenterId);
 
     const payload = {
       postId,
@@ -87,20 +90,18 @@ const Postpage1: React.FC = () => {
         payload
       );
 
-      // 댓글 추가 후 상태 업데이트
       setComments((prev) => [...prev, response.data.comment]);
-      setCommentContent(""); // 입력 필드 초기화
-      setPointsGiven(5); // 포인트 초기화
+      setCommentContent("");
+      setPointsGiven(5);
     } catch (error) {
       console.error("Failed to submit comment:", error);
       alert("댓글 작성에 실패했습니다.");
     }
   };
 
-  // 댓글 입력 취소 핸들러
   const handleCancelComment = () => {
-    setCommentContent(""); // 입력 필드 초기화
-    setPointsGiven(5); // 포인트 초기화
+    setCommentContent("");
+    setPointsGiven(5);
   };
 
   if (!post) {
@@ -109,14 +110,15 @@ const Postpage1: React.FC = () => {
 
   return (
     <div className="post-page">
-      {/* 게시물 정보 */}
       <div className="post-header">
         <h1 className="post-title">{post.title}</h1>
         <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
+        <p className="post-author">
+          작성자: {post.authorId.name}
+        </p>
         <p className="post-content">{post.content}</p>
       </div>
 
-      {/* 댓글 섹션 */}
       <div className="comment-section">
         <h2>댓글</h2>
         <ul className="comment-list">
@@ -134,7 +136,6 @@ const Postpage1: React.FC = () => {
           )}
         </ul>
 
-        {/* 댓글 작성 UI */}
         <h3>댓글 작성</h3>
         <textarea
           className="comment-input"
