@@ -9,8 +9,10 @@ const Write: React.FC = () => {
   const [content, setContent] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
   const navigate = useNavigate(); // useNavigate 초기화
-
-  const authorId = "677a32f4ae0a8ba26c65c9f0";
+  
+  const author=JSON.parse(sessionStorage.getItem("user") || "{}");
+  const authorId = author._id || null; // 사용자 ID 추출
+  //const authorId = "677a32f4ae0a8ba26c65c9f0";
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);

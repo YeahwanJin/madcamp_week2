@@ -8,7 +8,10 @@ interface Post {
   title: string;
   content: string;
   createdAt: string;
-  authorId: string;
+  authorId: {
+    _id: string;
+    name: string; // 글 작성자의 이름
+  };
 }
 
 interface Comment {
@@ -16,7 +19,13 @@ interface Comment {
   content: string;
   createdAt: string;
   pointsGiven: number;
+  commenterId: {
+    _id: string;
+    name: string; // 댓글 작성자의 이름
+  };
 }
+  //const commenter = JSON.parse(sessionStorage.getItem("user") || "{}");
+  //const commenterId=commenter._id || null; // 사용자 ID 추출
 
 const Postpage1: React.FC = () => {
   const { id: postId } = useParams<{ id: string }>();
@@ -25,6 +34,7 @@ const Postpage1: React.FC = () => {
   const [commentContent, setCommentContent] = useState(""); // 댓글 입력 상태
   const [pointsGiven, setPointsGiven] = useState<number>(5); // 포인트 입력 상태
   const commenterId = "677a32f4ae0a8ba26c65c9f0"; // 고정된 commenterId
+  
 
   // 게시물 및 댓글 데이터 가져오기
   useEffect(() => {
@@ -115,6 +125,7 @@ const Postpage1: React.FC = () => {
               <li key={comment._id} className="comment-item">
                 <p>{comment.content}</p>
                 <p>포인트: {comment.pointsGiven}</p>
+                <p>작성자: {comment.commenterId.name}</p>
                 <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
               </li>
             ))

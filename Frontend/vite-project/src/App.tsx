@@ -11,6 +11,7 @@ import Postpage1 from "./components/Postpage1";
 <Route path="/postpage" element={<Postpage1 />} />
 import Chatbot from "./components/Chatbot.tsx"
 import VideoCarousel from "./components/VideoCarousel"; // VideoCarousel 컴포넌트 임포트
+import Home from "./pages/Home.tsx"
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
       <div>
         <Navbar />
         <Routes>
-          <Route path="/" element={<VideoCarousel />} /> {/* 홈 화면에서 비디오 캐러셀 표시 */}
+          <Route path="/" element={<Home />} /> {/* 홈 화면에서 비디오 캐러셀 표시 */}
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/write" element={<Write />} />
