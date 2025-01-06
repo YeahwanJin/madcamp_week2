@@ -2,6 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCrown, faMedal, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../styles/UserInfoBox.css'; // 별도 CSS 파일 생성
+import Logo1 from "../assets/logo1.png";
+import Logo2 from "../assets/logo2.png";
+import Logo3 from "../assets/logo3.png";
 
 interface UserInfoBoxProps {
   name: string;
@@ -10,24 +13,33 @@ interface UserInfoBoxProps {
 }
 
 const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
-  const getUserIcon = (level: 'Bronze' | 'Silver' | 'Gold') => {
+  // 등급에 따라 이미지를 선택하는 함수
+  const getUserImage = (level: 'Bronze' | 'Silver' | 'Gold') => {
     switch (level) {
       case 'Gold':
-        return { icon: faCrown, color: '#FFD700' }; // 금색 왕관
+        return Logo1; // Gold에 해당하는 로고
       case 'Silver':
-        return { icon: faMedal, color: '#C0C0C0' }; // 은색 메달
+        return Logo2; // Silver에 해당하는 로고
       case 'Bronze':
-        return { icon: faStar, color: '#CD7F32' }; // 동색 별
+        return Logo3; // Bronze에 해당하는 로고
       default:
-        return { icon: faUser, color: '#000000' }; // 기본 아이콘
+        return Logo3; // 기본 로고 (Bronze로 설정)
     }
   };
 
-  const { icon, color } = getUserIcon(level);
+  const userImage = getUserImage(level);
 
   return (
     <div className="user-info">
-      <FontAwesomeIcon icon={icon} className="user-icon" style={{ color }} />
+      <img
+        className="user-logo"
+        src={userImage}
+        alt={`${level} logo`}
+        style={{
+          borderRadius: "15px",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
+        }}
+      />
       <div className="user-details">
         <p><strong>이름:</strong> {name}</p>
         <p><strong>포인트:</strong> {points}</p>

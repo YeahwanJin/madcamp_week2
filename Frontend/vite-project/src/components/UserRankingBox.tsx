@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCrown, faMedal } from '@fortawesome/free-solid-svg-icons';
 import '../styles/UserRankingBox.css';
+import Minilog1 from "../assets/minilogo1.png";
+import Minilog2 from "../assets/minilogo2.png";
+import Minilog3 from "../assets/minilogo3.png";
 
 interface RankingData {
   name: string;
@@ -30,17 +31,17 @@ const UserRankingBox: React.FC = () => {
     fetchRankings();
   }, []);
 
-  // 레벨에 따른 아이콘 결정 함수
-  const getLevelIcon = (level: 'Bronze' | 'Silver' | 'Gold') => {
+  // 레벨에 따른 이미지 결정 함수
+  const getLevelImage = (level: 'Bronze' | 'Silver' | 'Gold') => {
     switch (level) {
       case 'Gold':
-        return { icon: faCrown, color: '#FFD700' };
+        return Minilog1;
       case 'Silver':
-        return { icon: faMedal, color: '#C0C0C0' };
+        return Minilog2;
       case 'Bronze':
-        return { icon: faStar, color: '#CD7F32' };
+        return Minilog3;
       default:
-        return { icon: faStar, color: '#000000' };
+        return Minilog3; // 기본값
     }
   };
 
@@ -51,12 +52,20 @@ const UserRankingBox: React.FC = () => {
       <h2>유저 랭킹</h2>
       <ul>
         {rankings.map((user, index) => {
-          const { icon, color } = getLevelIcon(user.level);
+          const levelImage = getLevelImage(user.level);
           return (
             <li key={index}>
               <div className="info-left">
                 <span>{index + 1}.</span>
-                <FontAwesomeIcon icon={icon} style={{ color }} />
+                <img
+                  className="user-logo"
+                  src={levelImage}
+                  alt={`${user.level} Logo`}
+                  style={{
+                    borderRadius: "1px",
+                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
+                  }}
+                />
                 <span>{user.name}</span>
               </div>
               <div className="info-right">

@@ -11,7 +11,7 @@ const Write: React.FC = () => {
   const navigate = useNavigate(); // useNavigate 초기화
   
   const author=JSON.parse(sessionStorage.getItem("user") || "{}");
-  const authorId = author._id || null; // 사용자 ID 추출
+  const authorId = author._id ? author._id : "677a32f4ae0a8ba26c65c9f0"; // 세션에 사용자 ID가 없으면 기본값 사용
   //const authorId = "677a32f4ae0a8ba26c65c9f0";
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

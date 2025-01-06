@@ -42,7 +42,7 @@ const MyPage: React.FC = () => {
   }, []);
 
   if (loading) return <div>로딩 중...</div>;
-  if (!userData) return <div>사용자 정보를 가져올 수 없습니다. 다시 시도해주세요.</div>;
+  if (!userData) return <div>로그인을 먼저 해주세요</div>;
 
   const { name, points, level } = userData;
 
