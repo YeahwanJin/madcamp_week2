@@ -24,7 +24,7 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content }) => {
     <div className="post" onClick={handleClick}> {/* 게시물 클릭 시 handleClick 호출 */}
       <div className="user-avatar"></div>
       <div className="post-content">
-        <h3>{username}</h3> {/* 작성자 이름 */}
+        <h3>작성자:{username}</h3> {/* 작성자 이름 */}
         <p className="title">{title}</p> {/* 게시물 제목 */}
         <p className="content">{content}</p> {/* 게시물 내용 */}
       </div>
