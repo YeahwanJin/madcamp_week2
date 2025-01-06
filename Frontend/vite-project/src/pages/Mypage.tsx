@@ -15,8 +15,19 @@ const MyPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    const updateAllUserLevels = async () => {
+      try {
+        const response = await fetch('http://143.248.194.196:3000/users/update-levels', {
+          method: 'PATCH',
+        });
+        if (!response.ok) throw new Error('레벨 업데이트 실패');
+        console.log('모든 유저 레벨 업데이트 성공');
+      } catch (error) {
+        console.error('모든 유저 레벨 업데이트 중 에러 발생:', error);
+      }
+    };
+
     const fetchUserData = async () => {
-      // 세션에서 사용자 정보 가져오기
       const user = JSON.parse(sessionStorage.getItem('user') || '{}');
       const userId = user._id;
 
@@ -38,7 +49,12 @@ const MyPage: React.FC = () => {
       }
     };
 
-    fetchUserData();
+    const initializePage = async () => {
+      await updateAllUserLevels(); // 모든 유저의 레벨 업데이트
+      await fetchUserData(); // 현재 유저 데이터 가져오기
+    };
+
+    initializePage();
   }, []);
 
   if (loading) return <div>로딩 중...</div>;

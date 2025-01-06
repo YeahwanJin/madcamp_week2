@@ -17,7 +17,7 @@ const Chatbot: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const response = await fetch('http://localhost:3000/chat', {
+      const response = await fetch('http://143.248.194.196:3000/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: input, role: 'trainer' }),
