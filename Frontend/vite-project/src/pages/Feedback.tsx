@@ -9,9 +9,11 @@ interface PostType {
   _id: string;
   title: string;
   content: string;
+  likes: number; // 좋아요 수 추가
+  likedBy: string[]; // 좋아요 누른 유저 목록
   authorId: {
     _id: string;
-    name: string; // 작성자 이름 (백엔드에서 name으로 반환됨)
+    name: string; // 작성자 이름
   };
 }
 
@@ -46,9 +48,11 @@ const Feedback: React.FC = () => {
             <Post
               key={post._id}
               _id={post._id}
-              username={post.authorId.name} // name 필드 사용
+              username={post.authorId.name}
               title={post.title}
               content={post.content}
+              likes={post.likes}
+              likedBy={post.likedBy} // 좋아요 누른 유저 목록 전달
             />
           ))
         ) : (

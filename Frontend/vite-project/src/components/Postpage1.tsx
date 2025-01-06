@@ -8,6 +8,8 @@ interface Post {
   title: string;
   content: string;
   createdAt: string;
+  likes: number; // 좋아요 수 추가
+  likedBy: string[]; // 좋아요 누른 유저 ID 리스트
   authorId: {
     _id: string;
     name: string; // 글 작성자의 이름
@@ -27,27 +29,32 @@ interface Comment {
 
 const Postpage1: React.FC = () => {
   const { id: postId } = useParams<{ id: string }>();
-  const [post, setPost] = useState<Post | null>(null); 
+  const [post, setPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentContent, setCommentContent] = useState("");
   const [pointsGiven, setPointsGiven] = useState<number>(5);
+  const [liked, setLiked] = useState(false); // 좋아요 상태 관리
 
   // sessionStorage에서 user 정보를 가져온다고 가정
   const storedUser = sessionStorage.getItem("user");
-  // 만약 user가 저장되어 있지 않으면 null 반환
   const commenter = storedUser ? JSON.parse(storedUser) : null;
   const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
 
   useEffect(() => {
-    console.log("commenter:", commenter); // 콘솔로 실제 값 확인
-
     const fetchPostAndComments = async () => {
       if (postId) {
         try {
           const postResponse = await axios.get(
             `http://143.248.194.196:3000/posts/${postId}`
           );
-          setPost(postResponse.data);
+          const fetchedPost = postResponse.data;
+
+          // 좋아요 상태 초기화
+          if (fetchedPost.likedBy.includes(commenterId)) {
+            setLiked(true);
+          }
+
+          setPost(fetchedPost);
 
           const commentsResponse = await axios.get(
             `http://143.248.194.196:3000/posts/${postId}/comments`
@@ -60,7 +67,7 @@ const Postpage1: React.FC = () => {
     };
 
     fetchPostAndComments();
-  }, [postId]);
+  }, [postId, commenterId]);
 
   const handleCommentSubmit = async () => {
     if (!commentContent.trim()) {
@@ -72,9 +79,6 @@ const Postpage1: React.FC = () => {
       alert("게시글 정보를 불러오는 데 실패했습니다.");
       return;
     }
-
-    // commenterId가 정상적인 값인지 콘솔로 확인
-    console.log("댓글 작성 시 commenterId:", commenterId);
 
     const payload = {
       postId,
@@ -104,6 +108,32 @@ const Postpage1: React.FC = () => {
     setPointsGiven(5);
   };
 
+  const handleLike = async () => {
+    if (!commenterId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    if (liked) {
+      alert("이미 좋아요를 눌렀습니다.");
+      return;
+    }
+
+    try {
+      const response = await axios.patch(
+        `http://143.248.194.196:3000/posts/${postId}/like`,
+        { userId: commenterId }
+      );
+
+      setPost((prev) =>
+        prev ? { ...prev, likes: response.data.likes } : prev
+      );
+      setLiked(true);
+    } catch (error) {
+      console.error("Failed to like the post:", error);
+    }
+  };
+
   if (!post) {
     return <p>로딩 중...</p>;
   }
@@ -112,11 +142,16 @@ const Postpage1: React.FC = () => {
     <div className="post-page">
       <div className="post-header">
         <h1 className="post-title">{post.title}</h1>
-        <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
-        <p className="post-author">
-          작성자: {post.authorId.name}
+        <p className="post-date">
+          {new Date(post.createdAt).toLocaleDateString()}
         </p>
+        <p className="post-author">작성자: {post.authorId.name}</p>
         <p className="post-content">{post.content}</p>
+        <div className="post-likes">
+          <button className={`like-button ${liked ? "liked" : ""}`} onClick={handleLike}>
+            ❤️ {post.likes} Likes
+          </button>
+        </div>
       </div>
 
       <div className="comment-section">
