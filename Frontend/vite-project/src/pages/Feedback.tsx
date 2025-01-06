@@ -7,10 +7,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface PostType {
   _id: string;
-  username: string;
   title: string;
   content: string;
-  authorId: string;
+  authorId: {
+    _id: string;
+    name: string; // 작성자 이름 (백엔드에서 name으로 반환됨)
+  };
 }
 
 const Feedback: React.FC = () => {
@@ -20,7 +22,10 @@ const Feedback: React.FC = () => {
   useEffect(() => {
     fetch("http://143.248.194.196:3000/posts")
       .then((response) => response.json())
-      .then((data) => setPosts(data))
+      .then((data) => {
+        console.log("Fetched posts:", data); // API 응답 데이터 확인
+        setPosts(data);
+      })
       .catch((error) => console.error("Error fetching posts:", error));
   }, []);
 
@@ -41,7 +46,7 @@ const Feedback: React.FC = () => {
             <Post
               key={post._id}
               _id={post._id}
-              username={post.username}
+              username={post.authorId.name} // name 필드 사용
               title={post.title}
               content={post.content}
             />

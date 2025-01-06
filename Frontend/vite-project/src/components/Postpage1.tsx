@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Postpage.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; // 필요한 아이콘 가져오기
+
+
 
 interface Post {
   _id: string;
   title: string;
   content: string;
   createdAt: string;
-  authorId: string;
+  authorId: {
+    _id: string;
+    name: string; // 글 작성자의 이름
+  };
 }
 
 interface Comment {
@@ -16,7 +23,13 @@ interface Comment {
   content: string;
   createdAt: string;
   pointsGiven: number;
+  commenterId: {
+    _id: string;
+    name: string; // 댓글 작성자의 이름
+  };
 }
+  //const commenter = JSON.parse(sessionStorage.getItem("user") || "{}");
+  //const commenterId=commenter._id || null; // 사용자 ID 추출
 
 const Postpage1: React.FC = () => {
   const { id: postId } = useParams<{ id: string }>();
@@ -25,6 +38,7 @@ const Postpage1: React.FC = () => {
   const [commentContent, setCommentContent] = useState(""); // 댓글 입력 상태
   const [pointsGiven, setPointsGiven] = useState<number>(5); // 포인트 입력 상태
   const commenterId = "677a32f4ae0a8ba26c65c9f0"; // 고정된 commenterId
+  
 
   // 게시물 및 댓글 데이터 가져오기
   useEffect(() => {
@@ -101,27 +115,16 @@ const Postpage1: React.FC = () => {
     <div className="post-page">
       {/* 게시물 정보 */}
       <div className="post-header">
-        <h1 className="post-title">{post.title}</h1>
+        <div className="user-avatar"></div>
+        <p className="post-author">{post.authorId.name}</p>
         <p className="post-date">{new Date(post.createdAt).toLocaleDateString()}</p>
-        <p className="post-content">{post.content}</p>
       </div>
+      <h1 className="post-title">{post.title}</h1>
+      <p className="post-content">{post.content}</p>
+      
 
       {/* 댓글 섹션 */}
       <div className="comment-section">
-        <h2>댓글</h2>
-        <ul className="comment-list">
-          {comments.length > 0 ? (
-            comments.map((comment) => (
-              <li key={comment._id} className="comment-item">
-                <p>{comment.content}</p>
-                <p>포인트: {comment.pointsGiven}</p>
-                <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
-              </li>
-            ))
-          ) : (
-            <p>아직 댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
-          )}
-        </ul>
 
         {/* 댓글 작성 UI */}
         <h3>댓글 작성</h3>
@@ -133,7 +136,7 @@ const Postpage1: React.FC = () => {
           rows={3}
         />
         <div className="point-selection">
-          <label>지급할 포인트:</label>
+          <label>지급할 단백질:</label>
           {[1, 2, 3, 4, 5].map((point) => (
             <button
               key={point}
@@ -152,6 +155,29 @@ const Postpage1: React.FC = () => {
             + 댓글추가
           </button>
         </div>
+        <h2>댓글</h2>
+        <ul className="comment-list">
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <li key={comment._id} className="comment-item">
+                <div className="comment-header">
+                  <div className="user-avatar"></div>
+                  <p>작성자: {comment.commenterId.name}</p>
+                  <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+                 </div>
+                <p>{comment.content}</p>
+                <div className="point-info">
+                    <FontAwesomeIcon icon={faPlus} className="point-icon" /> {/* Font Awesome 아이콘 */}
+                    <span>{comment.pointsGiven}</span> {/* 포인트 값 */}
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>아직 댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
+          )}
+        </ul>
+
+
       </div>
     </div>
   );
