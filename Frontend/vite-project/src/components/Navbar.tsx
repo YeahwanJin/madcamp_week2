@@ -14,10 +14,13 @@ function Navbar() {
           <Link to="/feedback">Feedback</Link>
           
           <Link to="/mypage">Mypage</Link>
+          
+          <Link to="/trainers">Trainers</Link>
 
           <Link to="/login">Login</Link>
 
           <Link to="/chatbot">Chat</Link>
+
         </div>
       </nav>
   
