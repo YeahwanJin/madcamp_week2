@@ -1,46 +1,67 @@
 .post {
-    border-bottom: 1px solid #bdbbbb;
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 8px; /* 게시물 모서리를 둥글게 처리하여 부드러운 외관 제공 */
+    display: flex; /* 요소를 플렉스 박스로 설정 */
+    flex-direction: column; /* 상단 요소(헤더)와 하단 요소(내용)를 수직으로 배치 */
+    padding: 20px; /* 내부 여백 추가 */
+    background-color: #ffffff; /* 게시물의 기본 배경색 */
+    cursor: pointer; /* 커서를 올렸을 때 클릭 가능한 느낌 제공 */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease; /* 호버 효과를 부드럽게 적용 */
+    position: relative; /* 구분선 위치 설정을 위한 기준점으로 사용 */
+    border-bottom: 1px solid #ddd; /* 하단에 얇은 회색 경계선 */
+}
+
+.post:hover {
+    background-color: #dfebf8; /* 호버 시 연한 회색 배경으로 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 호버 시 약간의 그림자 효과 추가 */
+}
+
+.post-header {
+    display: flex; /* 헤더를 가로로 배치 */
+    align-items: center; /* 아이콘과 작성자 이름을 수직 가운데 정렬 */
+    margin-bottom: 5px; /* 헤더와 내용 사이 간격 설정 */
+    gap: 5px!important;
 }
 
 .user-avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #b8f397;
-    border-radius: 50%;
-    margin-right: 20px;
+    width: 24px!important; /* 작성자 아바타의 가로 크기 */
+    height: 24px!important; /* 작성자 아바타의 세로 크기 */
+    background-color: #b8f397; /* 아바타의 배경색 */
+    border-radius: 50%; /* 아바타를 원형으로 만들기 */
+    margin-right: 10px; /* 아바타와 작성자 이름 사이의 간격 */
+    flex-shrink: 0; /* 아바타 크기를 고정하여 줄어들지 않도록 설정 */
+}
+
+.username {
+    font-size: 12px; /* 작성자 이름의 글꼴 크기 */
+    font-weight: bold; /* 작성자 이름의 글꼴 두께 */
+    color: #333; /* 작성자 이름의 글자 색상 */
+    min-width: 200px;
+    text-align: left;
 }
 
 .post-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left; /* 본문 텍스트 왼쪽 정렬 */
-}
-
-.post-content h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
+    display: flex; /* 게시물 내용을 플렉스 박스로 설정 */
+    flex-direction: column; /* 제목과 본문을 수직으로 배치 */
+    gap: 10px; /* 제목과 본문 사이 간격 설정 */
+    width: 100%; /* 게시물 내용이 가득 채우도록 설정 */
+    
 }
 
 .post-content .title {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 500;
-    color: #555;
-    text-align: left; /* 제목 텍스트 왼쪽 정렬 */
+    margin: 0; /* 제목의 외부 여백 제거 */
+    font-size: 18px; /* 제목의 글꼴 크기 */
+    font-weight: bold; /* 제목의 글꼴 두께 */
+    color: #555; /* 제목의 글자 색상 */
+    text-align: left;
+    margin-left: 2px;
 }
 
 .post-content .content {
-    margin: 0;
-    font-size: 14px;
-    color: #777;
+    margin: 0; /* 본문의 외부 여백 제거 */
+    font-size: 12px; /* 본문의 글꼴 크기 */
+    color: #777; /* 본문의 글자 색상 */
+    line-height: 1.5; /* 본문의 줄 간격 설정 */
+    word-wrap: break-word; /* 긴 텍스트가 줄바꿈되도록 설정 */
+    text-align: left;
+    margin-left: 4px;
 }

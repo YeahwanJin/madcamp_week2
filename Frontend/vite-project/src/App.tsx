@@ -12,7 +12,8 @@ import Postpage1 from "./components/Postpage1";
 import Chatbot from "./components/Chatbot.tsx"
 import VideoCarousel from "./components/VideoCarousel"; // VideoCarousel 컴포넌트 임포트
 import Home from "./pages/Home.tsx"
-
+import Trainers from "./pages/Trainers.tsx"
+import TrainerDetail from './pages/TrainerDetail';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/posts/:id" element={<Postpage1 />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/trainers" element={<Trainers />} />
+          <Route path="/trainer/:id" element={<TrainerDetail />} />
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,6 @@
+.trainer-detail p {
+    margin-top: 20px;
+    line-height: 1.6;
+    white-space: pre-wrap; /* 개행 문자 적용 */
+  }
+  

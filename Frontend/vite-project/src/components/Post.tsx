@@ -57,9 +57,10 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
 
   return (
     <div className="post" onClick={handleClick}>
+      <div className="post-header"></div>
       <div className="user-avatar"></div>
+      <span className="username">{username}</span>
       <div className="post-content">
-        <h3>작성자: {username}</h3>
         <p className="title">{title}</p>
         <p className="content">{content}</p>
         <div className="post-footer">
