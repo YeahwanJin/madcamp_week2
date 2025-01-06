@@ -69,7 +69,7 @@ const UserRankingBox: React.FC = () => {
                 <span>{user.name}</span>
               </div>
               <div className="info-right">
-                <span>{user.points} points</span>
+                <span>{user.points} g</span>
               </div>
             </li>
           );

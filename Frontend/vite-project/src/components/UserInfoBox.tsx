@@ -26,6 +26,19 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
         return Logo2; // 기본 로고 (Bronze로 설정)
     }
   };
+  const getUserTitle = (level: 'Bronze' | 'Silver' | 'Gold') => {
+    switch (level) {
+      case 'Gold':
+        return '프로 보디빌더';
+      case 'Silver':
+        return '헬창';
+      case 'Bronze':
+        return '헬린이';
+      default:
+        return '';
+    }
+  };
+  
 
   const userImage = getUserImage(level);
 
@@ -43,7 +56,7 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
       <div className="user-details">
         <p><strong>이름:</strong> {name}</p>
         <p><strong>포인트:</strong> {points}</p>
-        <p><strong>등급:</strong> {level}</p>
+        <p><strong>등급:</strong> {getUserTitle(level)}</p>
       </div>
     </div>
   );

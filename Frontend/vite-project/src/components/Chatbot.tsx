@@ -118,7 +118,7 @@ const Chatbot: React.FC = () => {
                   fontStyle: 'italic',
                 }}
               >
-                <ListItemText primary="생각하는 중..." />
+                <ListItemText primary="프로틴 먹는 중..." />
               </Paper>
             </ListItem>
           )}
