@@ -9,32 +9,83 @@ interface PostType {
   _id: string;
   title: string;
   content: string;
-  likes: number; // 좋아요 수 추가
-  likedBy: string[]; // 좋아요 누른 유저 목록
+  likes: number;
+  likedBy: string[];
   authorId: {
     _id: string;
-    name: string; // 작성자 이름
+    name: string;
   };
 }
 
 const Feedback: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>(""); // 검색어 상태 관리
+  const [isSearching, setIsSearching] = useState<boolean>(false); // 검색 상태 관리
 
   useEffect(() => {
-    fetch("http://143.248.194.196:3000/posts")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched posts:", data); // API 응답 데이터 확인
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://143.248.194.196:3000/posts");
+        const data = await response.json();
         setPosts(data);
-      })
-      .catch((error) => console.error("Error fetching posts:", error));
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
   }, []);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      // 검색어가 비어있다면 전체 게시물 다시 가져오기
+      setIsSearching(false);
+      try {
+        const response = await fetch("http://143.248.194.196:3000/posts");
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+      return;
+    }
+
+    setIsSearching(true); // 검색 상태 활성화
+
+    try {
+      const response = await fetch(
+        `http://143.248.194.196:3000/posts/search?query=${encodeURIComponent(searchQuery)}`
+      );
+      const data = await response.json();
+
+      if (data.length > 0) {
+        setPosts(data); // 검색된 게시물 업데이트
+      } else {
+        setPosts([]); // 검색 결과가 없으면 빈 배열로 설정
+      }
+    } catch (error) {
+      console.error("Error searching posts:", error);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleSearch(); // Enter 키로 검색 실행
+    }
+  };
 
   return (
     <div className="feedback-page">
       <div className="search-bar">
-        <input type="text" placeholder="검색" />
+        <input
+          type="text"
+          placeholder="검색"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // 검색어 상태 업데이트
+          onKeyDown={handleKeyDown} // Enter 키 이벤트 처리
+        />
+        <button onClick={handleSearch}>검색</button>
         <div className="create-post">
           <button onClick={() => navigate("/write")}>
             <FontAwesomeIcon icon={faPlus} className="icon" /> 글 작성
@@ -43,7 +94,9 @@ const Feedback: React.FC = () => {
       </div>
       <h1>Feedback</h1>
       <div className="post-list">
-        {posts.length > 0 ? (
+        {isSearching && posts.length === 0 ? (
+          <p>검색 결과가 없습니다.</p>
+        ) : posts.length > 0 ? (
           posts.map((post) => (
             <Post
               key={post._id}
@@ -52,7 +105,7 @@ const Feedback: React.FC = () => {
               title={post.title}
               content={post.content}
               likes={post.likes}
-              likedBy={post.likedBy} // 좋아요 누른 유저 목록 전달
+              likedBy={post.likedBy}
             />
           ))
         ) : (
