@@ -9,6 +9,7 @@ interface Message {
 const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -16,12 +17,16 @@ const Chatbot: React.FC = () => {
     const userMessage: Message = { sender: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
 
+    setInput('');
+    setIsLoading(true); // 로딩 상태 활성화
+
     try {
       const response = await fetch('http://143.248.194.196:3000/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: input, role: 'trainer' }),
       });
+
       const data = await response.json();
 
       const botMessage: Message = { sender: 'bot', content: data.answer };
@@ -29,15 +34,14 @@ const Chatbot: React.FC = () => {
     } catch {
       const botMessage: Message = { sender: 'bot', content: 'Error: Unable to fetch response.' };
       setMessages((prev) => [...prev, botMessage]);
+    } finally {
+      setIsLoading(false); // 로딩 상태 비활성화
     }
-
-    setInput('');
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSendMessage();
-      setInput('');
     }
   };
 
@@ -48,25 +52,25 @@ const Chatbot: React.FC = () => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        height: '80vh', // 전체 높이를 80%로 제한
-        maxHeight: '600px', // 최대 높이 설정
+        height: '80vh',
+        maxHeight: '600px',
         backgroundColor: '#f5f5f5',
         padding: 2,
         margin: 'auto',
         width: '100%',
-        maxWidth: '600px', // 채팅 창의 최대 너비 제한
-        marginTop: '64px', // 내비게이션 바와의 간격 추가
-        borderRadius: '16px', // 둥근 모서리 추가
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', // 그림자 추가
+        maxWidth: '600px',
+        marginTop: '64px',
+        borderRadius: '16px',
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
       }}
     >
-      <Typography 
-        variant="h4" 
+      <Typography
+        variant="h4"
         gutterBottom
         sx={{
-            color: 'black', // 글씨 색상 변경
-            fontSize: '28px', // 글씨 크기 변경
-            fontWeight: 'bold', // 글씨 굵기 변경
+          color: 'black',
+          fontSize: '28px',
+          fontWeight: 'bold',
         }}
       >
         운동에 대해 무엇이든 물어보세요
@@ -79,9 +83,9 @@ const Chatbot: React.FC = () => {
           overflowY: 'auto',
           padding: 2,
           marginBottom: 2,
-          height: '60vh', // 채팅 메시지 창 높이 제한
-          maxHeight: '400px', // 최대 높이 설정
-          borderRadius: '12px', // 둥근 모서리 추가
+          height: '60vh',
+          maxHeight: '400px',
+          borderRadius: '12px',
         }}
       >
         <List>
@@ -94,43 +98,61 @@ const Chatbot: React.FC = () => {
                   maxWidth: '75%',
                   backgroundColor: msg.sender === 'user' ? 'black' : '#e0e0e0',
                   color: msg.sender === 'user' ? 'white' : 'black',
-                  borderRadius: '8px', // 말풍선 둥근 모서리
+                  borderRadius: '8px',
                 }}
               >
                 <ListItemText primary={msg.content} />
               </Paper>
             </ListItem>
           ))}
+          {isLoading && ( // 로딩 중 상태 표시
+            <ListItem sx={{ justifyContent: 'flex-start' }}>
+              <Paper
+                elevation={2}
+                sx={{
+                  padding: 1,
+                  maxWidth: '75%',
+                  backgroundColor: '#e0e0e0',
+                  color: 'black',
+                  borderRadius: '8px',
+                  fontStyle: 'italic',
+                }}
+              >
+                <ListItemText primary="생각하는 중..." />
+              </Paper>
+            </ListItem>
+          )}
         </List>
       </Paper>
 
       <Box sx={{ display: 'flex', gap: 1 }}>
-            <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Type your message..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyPress={handleKeyPress}
-        sx={{
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+          sx={{
             '& .MuiOutlinedInput-root': {
-            '&.Mui-focused fieldset': {
-                borderColor: 'black', // 포커스 시 테두리 검정색으로 변경
+              '&.Mui-focused fieldset': {
+                borderColor: 'black',
+              },
             },
-            },
-        }}
+          }}
         />
         <Button
-            variant="contained"
-            onClick={handleSendMessage}
-            sx={{
-                backgroundColor: 'black', // 버튼 색상을 검정으로 설정
-                color: 'white', // 글씨 색상을 흰색으로 설정
-                '&:hover': {
-                backgroundColor: '#333', // 호버 시 버튼 색상
-                },
-                }}>           
-                전송
+          variant="contained"
+          onClick={handleSendMessage}
+          sx={{
+            backgroundColor: 'black',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: '#333',
+            },
+          }}
+        >
+          전송
         </Button>
       </Box>
     </Box>
