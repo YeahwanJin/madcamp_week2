@@ -37,11 +37,11 @@ const UserRankingBox: React.FC = () => {
       case 'Gold':
         return Minilog1;
       case 'Silver':
-        return Minilog2;
-      case 'Bronze':
         return Minilog3;
+      case 'Bronze':
+        return Minilog2;
       default:
-        return Minilog3; // 기본값
+        return Minilog2; // 기본값
     }
   };
 
@@ -62,7 +62,7 @@ const UserRankingBox: React.FC = () => {
                   src={levelImage}
                   alt={`${user.level} Logo`}
                   style={{
-                    borderRadius: "1px",
+                    borderRadius: "5px",
                     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
                   }}
                 />

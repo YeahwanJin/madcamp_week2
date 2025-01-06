@@ -19,11 +19,11 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
       case 'Gold':
         return Logo1; // Gold에 해당하는 로고
       case 'Silver':
-        return Logo2; // Silver에 해당하는 로고
+        return Logo3; // Silver에 해당하는 로고
       case 'Bronze':
-        return Logo3; // Bronze에 해당하는 로고
+        return Logo2; // Bronze에 해당하는 로고
       default:
-        return Logo3; // 기본 로고 (Bronze로 설정)
+        return Logo2; // 기본 로고 (Bronze로 설정)
     }
   };
 
