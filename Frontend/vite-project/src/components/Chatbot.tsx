@@ -61,7 +61,7 @@ const Chatbot: React.FC = () => {
         maxWidth: '600px',
         marginTop: '64px',
         borderRadius: '16px',
-        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
       }}
     >
       <Typography
