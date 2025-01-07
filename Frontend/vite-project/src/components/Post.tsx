@@ -66,14 +66,15 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
         <span className="username">{username}</span>
       </div>
       <div className="post-content">
+      <p className="title">{title}</p>
         {imageUrl && (
           <img
             src={imageUrl}
             alt="Post"
-            className="post-image"
+            className="post-list-image"
           />
         )}
-        <p className="title">{title}</p>
+  
         <p className="content">{content}</p>
         <div className="post-footer">
           <button

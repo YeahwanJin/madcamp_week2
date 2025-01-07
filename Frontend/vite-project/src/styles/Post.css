@@ -1,3 +1,12 @@
+.post-list-image{
+    width: 100%; /* 가로 길이 고정 */
+    max-width: 600px; /* 최대 가로 길이 설정 */
+    height: auto; /* 비율을 유지한 채 자동 조정 */
+    max-height: 200px; /* 세로 길이를 제한하여 반으로 줄임 */
+    object-fit: cover; /* 이미지가 비율에 맞게 잘리도록 설정 */
+    border-radius: 10px; /* 모서리를 둥글게 */
+    margin-bottom: 10px; /* 아래 여백 추가 */
+  }
 .post {
     border-radius: 8px; /* 게시물 모서리를 둥글게 처리하여 부드러운 외관 제공 */
     display: flex; /* 요소를 플렉스 박스로 설정 */
