@@ -30,7 +30,8 @@ function Navbar() {
           <Link to="/trainers">Trainers</Link>
           <Link to="/chatbot">Chat</Link>
           <Link to="/mypage">Mypage</Link>
-    
+          <Link to="/news">News</Link>
+
           {isLoggedIn ? (
           <Link to="/" onClick={handleLogout} className="navbar-link">
             Logout

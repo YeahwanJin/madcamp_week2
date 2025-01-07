@@ -14,6 +14,7 @@ import VideoCarousel from "./components/VideoCarousel"; // VideoCarousel 컴포�
 import Home from "./pages/Home.tsx"
 import Trainers from "./pages/Trainers.tsx"
 import TrainerDetail from './pages/TrainerDetail.tsx';
+import News from "./pages/News.tsx";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/trainers" element={<Trainers />} />
           <Route path="/trainer/:id" element={<TrainerDetail />} />
+          <Route path='/news' element={<News/>}/>
         </Routes>
       </div>
     </Router>
