@@ -3,8 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Postpage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import Minilog1 from "../assets/minilogo1.png";
+import Minilog2 from "../assets/minilogo2.png";
+import Minilog3 from "../assets/minilogo3.png";
+
 
 interface Post {
   _id: string;
@@ -13,7 +16,7 @@ interface Post {
   createdAt: string;
   likes: number;
   likedBy: string[];
-  imageUrl?: string; // 이미지 URL 추가
+  imageUrl?: string;
   authorId: {
     _id: string;
     name: string;
@@ -38,11 +41,30 @@ const Postpage1: React.FC = () => {
   const [commentContent, setCommentContent] = useState("");
   const [pointsGiven, setPointsGiven] = useState<number>(1);
   const [liked, setLiked] = useState(false);
-  const [pointOptions, setPointOptions] = useState<number[]>([1]); // 선택 가능한 포인트 옵션
+  const [pointOptions, setPointOptions] = useState<number[]>([1]);
+  const [authorLevel, setAuthorLevel] = useState<string>("");
 
   const storedUser = sessionStorage.getItem("user");
   const commenter = storedUser ? JSON.parse(storedUser) : null;
   const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
+
+  useEffect(() => {
+    // 작성자 레벨 가져오기
+    const fetchAuthorLevel = async () => {
+      if (post?.authorId._id) {
+        try {
+          const response = await axios.get(
+            `http://143.248.194.196:3000/users/${post.authorId._id}/level`
+          );
+          setAuthorLevel(response.data.level);
+        } catch (error) {
+          console.error("작성자 레벨 가져오기 실패:", error);
+        }
+      }
+    };
+
+    fetchAuthorLevel();
+  }, [post?.authorId._id]);
 
   useEffect(() => {
     // 사용자 레벨 가져오기 및 포인트 옵션 설정
@@ -53,7 +75,6 @@ const Postpage1: React.FC = () => {
         );
         const userLevel = response.data.level;
 
-        // 레벨에 따라 포인트 옵션 설정
         if (userLevel === "Gold") {
           setPointOptions([1, 2, 3, 4, 5]);
         } else if (userLevel === "Silver") {
@@ -78,7 +99,6 @@ const Postpage1: React.FC = () => {
           );
           const fetchedPost = postResponse.data;
 
-          // 이미지 경로 처리
           if (fetchedPost.imageUrl) {
             fetchedPost.imageUrl = `http://143.248.194.196:3000${fetchedPost.imageUrl}`;
           }
@@ -167,6 +187,19 @@ const Postpage1: React.FC = () => {
     }
   };
 
+  const getAvatarImage = (level: string) => {
+    switch (level) {
+      case "Gold":
+        return Minilog1;
+      case "Silver":
+        return Minilog3;
+      case "Bronze":
+        return Minilog2;
+      default:
+        return Minilog2;
+    }
+  };
+
   if (!post) {
     return <p>로딩 중...</p>;
   }
@@ -174,7 +207,11 @@ const Postpage1: React.FC = () => {
   return (
     <div className="post-page">
       <div className="post-header">
-        <div className="user-avatar"></div>
+        <img
+          src={getAvatarImage(authorLevel)}
+          alt="작성자 레벨 아이콘"
+          className="user-avatar"
+        />
         <p className="post-author">{post.authorId.name}</p>
         <p className="post-date">
           {new Date(post.createdAt).toLocaleDateString()}
@@ -197,13 +234,12 @@ const Postpage1: React.FC = () => {
       <p className="post-content">{post.content}</p>
 
       <div className="post-likes">
-      <button
-            className={`like-button ${liked ? "liked" : ""}`}
-            onClick={handleLike}
-          >
-            <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {post.likes} Likes
-          </button>
-
+        <button
+          className={`like-button ${liked ? "liked" : ""}`}
+          onClick={handleLike}
+        >
+          <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {post.likes} Likes
+        </button>
       </div>
 
       <div className="comment-section">

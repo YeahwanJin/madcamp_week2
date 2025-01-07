@@ -126,6 +126,7 @@ const Feedback: React.FC = () => {
               key={post._id}
               _id={post._id}
               username={post.authorId.name}
+              authorId={post.authorId._id}
               title={post.title}
               content={post.content}
               imageUrl={post.imageUrl} // 이미지 URL 전달

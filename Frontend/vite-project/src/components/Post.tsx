@@ -3,38 +3,66 @@ import "../styles/Post.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faComment } from "@fortawesome/free-solid-svg-icons";
+import Minilog1 from "../assets/minilogo1.png";
+import Minilog2 from "../assets/minilogo2.png";
+import Minilog3 from "../assets/minilogo3.png";
+
 
 interface PostProps {
   _id: string;
   username: string;
+  authorId: string; // 작성자 ID 추가
   title: string;
   content: string;
   likes: number;
-  likedBy: string[]; // 좋아요 누른 유저 목록 추가
-  imageUrl?: string; // 이미지 URL 추가
+  likedBy: string[];
+  imageUrl?: string;
 }
 
-const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, likedBy, imageUrl }) => {
+const Post: React.FC<PostProps> = ({
+  _id,
+  username,
+  authorId,
+  title,
+  content,
+  likes,
+  likedBy,
+  imageUrl,
+}) => {
   const navigate = useNavigate();
   const [likeCount, setLikeCount] = useState(likes);
-  const [liked, setLiked] = useState(false); // 좋아요 상태 관리
+  const [liked, setLiked] = useState(false);
+  const [authorLevel, setAuthorLevel] = useState<string>(""); // 작성자 레벨 상태 추가
 
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   useEffect(() => {
     if (user?._id && likedBy.includes(user._id)) {
-      setLiked(true); // 이미 좋아요를 누른 경우 초기화
+      setLiked(true);
     }
   }, [likedBy, user?._id]);
 
-  // 게시물 클릭 시 상세 페이지로 이동
+  // 작성자 레벨 가져오기
+  useEffect(() => {
+    const fetchAuthorLevel = async () => {
+      try {
+        const response = await axios.get(
+          `http://143.248.194.196:3000/users/${authorId}/level`
+        );
+        setAuthorLevel(response.data.level);
+      } catch (error) {
+        console.error("작성자 레벨 가져오기 실패:", error);
+      }
+    };
+
+    fetchAuthorLevel();
+  }, [authorId]);
+
   const handleClick = () => {
     navigate(`/posts/${_id}`, { state: { username, title, content, imageUrl } });
   };
 
-  // 좋아요 버튼 클릭
   const handleLike = async (event: React.MouseEvent) => {
     event.stopPropagation();
 
@@ -49,24 +77,42 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
     }
 
     try {
-      const response = await axios.patch(`http://143.248.194.196:3000/posts/${_id}/like`, {
-        userId: user._id,
-      });
-      setLikeCount(response.data.likes); // 좋아요 수 업데이트
-      setLiked(true); // 좋아요 상태 업데이트
+      const response = await axios.patch(
+        `http://143.248.194.196:3000/posts/${_id}/like`,
+        { userId: user._id }
+      );
+      setLikeCount(response.data.likes);
+      setLiked(true);
     } catch (error) {
-      console.error("좋아요 처리 중 오류:", error);
+      console.error("좋아요 처리 실패:", error);
+    }
+  };
+
+  const getAvatarImage = (level: string) => {
+    switch (level) {
+      case "Gold":
+        return Minilog1;
+      case "Silver":
+        return Minilog3;
+      case "Bronze":
+        return Minilog2;
+      default:
+        return Minilog2;
     }
   };
 
   return (
     <div className="post" onClick={handleClick}>
       <div className="post-header">
-        <div className="user-avatar"></div>
+        <img
+          src={getAvatarImage(authorLevel)}
+          alt="작성자 레벨 아이콘"
+          className="user-avatar"
+        />
         <span className="username">{username}</span>
       </div>
       <div className="post-content">
-      <p className="title">{title}</p>
+        <p className="title">{title}</p>
         {imageUrl && (
           <img
             src={imageUrl}
@@ -74,21 +120,17 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
             className="post-list-image"
           />
         )}
-  
         <p className="content">{content}</p>
         <div className="post-footer">
           <button
             className={`like-button ${liked ? "liked" : ""}`}
             onClick={handleLike}
           >
-           <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {likeCount} Likes
+            <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {likeCount} Likes
           </button>
           <button
             className="comment-button"
-            onClick={(event) => {
-              event.stopPropagation(); // 부모로 클릭 이벤트 전파 방지
-              handleClick(); // 상세 페이지로 이동
-            }}
+            onClick={(event) => event.stopPropagation()}
           >
             <FontAwesomeIcon icon={faComment} className="icon" /> Comment
           </button>
