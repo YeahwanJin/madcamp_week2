@@ -1,4 +1,9 @@
 /* 전체 페이지 컨테이너 스타일 */
+.post-likes {
+    display: flex; /* Flexbox 활성화 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin-bottom: 20px; /* 아래 여백 추가 */
+  }
 .post-page {
     width: 95%; /* 페이지 너비 확장 */
     max-width: 1200px; /* 최대 너비 설정 */
@@ -218,6 +223,7 @@
 }
 
 /* 댓글 아이템 내용 */
+
 .comment-item p {
     font-size: 14px;
     color: #555;

@@ -1,47 +1,60 @@
-.filter-buttons {
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+.trainers-page h1 {
+    margin-top: 60px;
   }
   
-  .filter-buttons button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    transition: background-color 0.2s ease;
-  }
+  .filter-buttons {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .filter-buttons button {
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      transition: background-color 0.2s ease;
+    }
+    
+    .filter-buttons button:hover {
+      background-color: #ddd;
+    }
+    
+    .filter-buttons button.active {
+      background-color: #000000;
+      color: white;
+    }
+    
+    .trainer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .trainer-card {
+      text-decoration: none;
+      color: black;
+    }
   
-  .filter-buttons button:hover {
-    background-color: #ddd;
-  }
-  
-  .filter-buttons button.active {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .trainer-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .trainer-card {
-    text-decoration: none;
-    color: black;
-  }
-  
-  .trainer-card img {
-    width: 100%;
-    border-radius: 8px;
-    transition: transform 0.2s;
-  }
-  
-  .trainer-card:hover img {
-    transform: scale(1.05);
-  }
-  
+    .trainer-card p, h3 {
+      color: black; /* 기본 텍스트 색상 */
+      transition: color 0.2s ease; /* 부드러운 전환 효과 */
+    }
+    
+    .trainer-card:hover p, h3 {
+      color: black; /* 호버 시에도 텍스트 색상을 검은색으로 유지 */
+    }
+    
+    .trainer-card img {
+      width: 100%;
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+    
+    .trainer-card:hover img {
+      transform: scale(1.05);
+    }
+    

@@ -4,6 +4,7 @@ import axios from "axios";
 import "../styles/Postpage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 interface Post {
   _id: string;
@@ -196,12 +197,13 @@ const Postpage1: React.FC = () => {
       <p className="post-content">{post.content}</p>
 
       <div className="post-likes">
-        <button
-          className={`like-button ${liked ? "liked" : ""}`}
-          onClick={handleLike}
-        >
-          ❤️ {post.likes} Likes
-        </button>
+      <button
+            className={`like-button ${liked ? "liked" : ""}`}
+            onClick={handleLike}
+          >
+            <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {post.likes} Likes
+          </button>
+
       </div>
 
       <div className="comment-section">

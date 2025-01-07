@@ -21,7 +21,7 @@
 }
 
 .search-bar { /* 검색 바와 버튼을 포함하는 컨테이너 */
-    margin-top: -300px; /*상대적으로 위로 옮기기*/
+    margin-top: -220px; /*상대적으로 위로 옮기기*/
     margin-left: 200px;
     display: flex; /* 내부 요소를 가로로 배열 */
     justify-content: flex-end;

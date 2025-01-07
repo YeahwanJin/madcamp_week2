@@ -15,12 +15,12 @@
     z-index: 1000;
   }
   
-  .navbar-logo .home-button {
+  .logo-img {
+    margin-top: 5px;
     width: 40px;
     height: 40px;
-    background-color: #d3d3d3; /* 회색 동그라미 */
-    border-radius: 50%;
-    display: inline-block;
+    border-radius: 50%; /* 동그란 모양 */
+    object-fit: cover; /* 이미지가 영역에 맞게 조정됨 */
   }
   
   .navbar-links {

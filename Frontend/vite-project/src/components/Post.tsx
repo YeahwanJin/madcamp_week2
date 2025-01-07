@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../styles/Post.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 
 interface PostProps {
   _id: string;
@@ -77,7 +80,16 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
             className={`like-button ${liked ? "liked" : ""}`}
             onClick={handleLike}
           >
-            ❤️ {likeCount} Likes
+           <FontAwesomeIcon icon={faThumbsUp} className="icon" /> {likeCount} Likes
+          </button>
+          <button
+            className="comment-button"
+            onClick={(event) => {
+              event.stopPropagation(); // 부모로 클릭 이벤트 전파 방지
+              handleClick(); // 상세 페이지로 이동
+            }}
+          >
+            <FontAwesomeIcon icon={faComment} className="icon" /> Comment
           </button>
         </div>
       </div>
