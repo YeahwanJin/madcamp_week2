@@ -6,6 +6,7 @@
     margin: auto; /* 화면 중앙에 배치 */
     padding: 20px;
     gap: 20px; /* 자식 요소 간 간격 */
+    
 }
 
 .feedback-page h1 { /* Feedback 제목 */

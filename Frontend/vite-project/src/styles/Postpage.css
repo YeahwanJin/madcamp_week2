@@ -149,18 +149,30 @@
 
 
 
+.point-selection {
+    display: flex; /* Flexbox 활성화 */
+    align-items: center; /* 버튼의 세로 정렬 */
+    justify-content: flex-start; /* 버튼을 왼쪽 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+}
+
 .point-button {
+    position: relative;
+    right: 1px;
     width: 35px;
     height: 35px;
-    margin-left: 10px;
+    margin-left: 0; /* 기존 간격 제거 */
     border: 1px solid #ddd;
     border-radius: 50%;
     background-color: #ffffff;
     cursor: pointer;
+    display: flex; /* 텍스트 정렬을 위한 Flexbox */
+    align-items: center; /* 텍스트 세로 중앙 정렬 */
+    justify-content: center; /* 텍스트 가로 중앙 정렬 */
 }
 
 .point-button.selected {
-    background-color: #0073e6;
+    background-color: #000000;
     color: #fff;
 }
 
