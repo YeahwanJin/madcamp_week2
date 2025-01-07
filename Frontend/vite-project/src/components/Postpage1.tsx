@@ -32,6 +32,7 @@ interface Comment {
     _id: string;
     name: string;
   };
+  level?:string;
 }
 
 const Postpage1: React.FC = () => {
@@ -112,7 +113,23 @@ const Postpage1: React.FC = () => {
           const commentsResponse = await axios.get(
             `http://143.248.194.196:3000/posts/${postId}/comments`
           );
-          setComments(commentsResponse.data);
+
+          // 댓글 작성자 레벨 가져오기
+          const updatedComments = await Promise.all(
+            commentsResponse.data.map(async (comment: Comment) => {
+              try {
+                const levelResponse = await axios.get(
+                  `http://143.248.194.196:3000/users/${comment.commenterId._id}/level`
+                );
+                return { ...comment, level: levelResponse.data.level };
+              } catch (error) {
+                console.error("댓글 작성자 레벨 가져오기 실패:", error);
+                return { ...comment, level: "Bronze" }; // 기본값
+              }
+            })
+          );
+
+          setComments(updatedComments);
         } catch (error) {
           console.error("Failed to fetch post or comments:", error);
         }
@@ -280,7 +297,11 @@ const Postpage1: React.FC = () => {
             comments.map((comment) => (
               <li key={comment._id} className="comment-item">
                 <div className="comment-header">
-                  <div className="user-avatar"></div>
+                <img
+                  src={getAvatarImage(comment.level || "Bronze")}
+                  alt="댓글 작성자 레벨 아이콘"
+                  className="user-avatar"
+                />
                   <p>작성자: {comment.commenterId.name}</p>
                   <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
                 </div>
