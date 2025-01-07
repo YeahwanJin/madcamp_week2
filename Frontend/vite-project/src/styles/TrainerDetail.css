@@ -1,6 +1,113 @@
-.trainer-detail p {
-    margin-top: 20px;
-    line-height: 1.6;
-    white-space: pre-wrap; /* 개행 문자 적용 */
-  }
+/* 전체 페이지 스타일 */
+.trainer-detail {
+  padding: 20px;
+}
+
+/* 뒤로가기 버튼 스타일 */
+.back-button {
+  position: relative;
+  left: -370px; /* 버튼을 왼쪽으로 이동 */
+  bottom: -80px;
+  margin-bottom: 0px;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Introduce 섹션 */
+.introduce-section h1 {
+  margin-bottom: 80px;
+}
+
+.introduce-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.trainer-image {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.trainer-info {
+  flex: 1;
+}
+
+.trainer-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.trainer-short-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.trainer-details {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+}
+
+
+/* 프림 소개 박스 */
+.prim-info-box {
+  margin-top: 60px;
+  padding: 20px;
+  background-color: #a3a3a3; /* 보라색 배경 */
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.prim-info-box h2 {
+  margin-bottom: 15px;
   
+}
+
+.prim-content {
+  display: flex;
+  flex-direction: column; /* 세로 방향 배치 */
+  align-items: center; /* 중앙 정렬 */
+  gap: 10px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.prim-icon {
+  width: 40px;
+  height: 40px;
+}
+
+/* Detailed Description */
+.trainer-detailed-description {
+  margin-top: 30px;
+  max-width: 600px;
+}
+
+.trainer-detailed-description h2 {
+  margin-bottom: 10px;
+}
+
+.trainer-detailed-description p {
+  line-height: 1.6;
+  white-space: pre-wrap; /* 개행 문자 처리 */
+}
+
+/* 기타 정보 섹션 */
+.additional-info {
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0; /* 상단 구분선 */
+  padding-top: 20px;
+}
+
+.info-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0; /* 각 항목 구분선 */
+  font-size: 16px;
+  color: #333; /* 텍스트 색상 */
+}

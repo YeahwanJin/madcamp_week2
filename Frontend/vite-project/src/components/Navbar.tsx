@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css"; // 스타일 파일 추가
+import logo from '../assets/dumbell2.png';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // 로그인 상태 관리
@@ -22,9 +23,11 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <div className="navbar-logo">
-          <Link to="/" className="home-button"></Link> {/* 회색 동그라미 버튼 */}
-        </div>
+      <div className="navbar-logo">
+        <Link to="/" className="home-button">
+          <img src={logo} alt="Home" className="logo-img" />
+        </Link>
+      </div>
         <div className="navbar-links"> {/* 메뉴 버튼들 */}
           <Link to="/feedback">Feedback</Link>
           <Link to="/trainers">Trainers</Link>

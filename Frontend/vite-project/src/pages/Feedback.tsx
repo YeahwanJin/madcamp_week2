@@ -85,7 +85,6 @@ const Feedback: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)} // 검색어 상태 업데이트
           onKeyDown={handleKeyDown} // Enter 키 이벤트 처리
         />
-        <button onClick={handleSearch}>검색</button>
         <div className="create-post">
           <button onClick={() => navigate("/write")}>
             <FontAwesomeIcon icon={faPlus} className="icon" /> 글 작성
