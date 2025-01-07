@@ -1,22 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import trainerData from "../data/trainers.json";
+import axios from "axios";
 import "../styles/TrainerDetail.css";
 import call from '../assets/phonecall.png';
+
+interface Trainer {
+  id: number;
+  name: string;
+  gender: string;
+  category: string;
+  image: string;
+  shortDescription: string;
+  detailedDescription: string;
+}
 
 const TrainerDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [trainer, setTrainer] = useState<Trainer | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const trainer = trainerData.find((trainer) => trainer.id === Number(id));
+  useEffect(() => {
+    const fetchTrainer = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `http://143.248.194.196:3000/trainers/${id}`
+        );
+        setTrainer(response.data);
+      } catch (err) {
+        console.error("Error fetching trainer:", err);
+        setError("Failed to load trainer details.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!trainer) {
-    return <div>Trainer not found.</div>;
+    fetchTrainer();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !trainer) {
+    return <div>{error || "Trainer not found."}</div>;
   }
 
   return (
     <div className="trainer-detail">
-  
       {/* Introduce 섹션 */}
       <div className="introduce-section">
         {/* 뒤로가기 버튼 */}
@@ -24,17 +57,18 @@ const TrainerDetail: React.FC = () => {
         {/* Introduce 헤더 */}
         <h1>트레이너 소개</h1>
         <div className="introduce-content">
-        <img src={trainer.image} alt={trainer.name} className="trainer-image" />
-        <div className="trainer-info">
-          <h2 className="trainer-name">{trainer.name}</h2>
-          <p className="trainer-short-description">{trainer.shortDescription}</p>
-          <p className="trainer-details">
-            성별: {trainer.gender} <br />
-            전문: {trainer.category}
-          </p>
+          <img src={trainer.image} alt={trainer.name} className="trainer-image" />
+          <div className="trainer-info">
+            <h2 className="trainer-name">{trainer.name}</h2>
+            <p className="trainer-short-description">{trainer.shortDescription}</p>
+            <p className="trainer-details">
+              성별: {trainer.gender} <br />
+              전문: {trainer.category}
+            </p>
+          </div>
         </div>
-        </div>
-        </div>
+      </div>
+      
       {/* 프림 소개 박스 */}
       <div className="prim-info-box">
         <div className="prim-content">
@@ -45,13 +79,13 @@ const TrainerDetail: React.FC = () => {
           </p>
         </div>
       </div>
-  
+
       {/* Detailed Description */}
       <div className="trainer-detailed-description">
         <h2>Detail</h2>
         <p>{trainer.detailedDescription}</p>
       </div>
-  
+
       {/* Additional Info Section (1:1 문의, 유의 사항, 환불 정책) */}
       <div className="additional-info">
         <div className="info-item">
@@ -66,7 +100,6 @@ const TrainerDetail: React.FC = () => {
       </div>
     </div>
   );
-  
 };
 
 export default TrainerDetail;
