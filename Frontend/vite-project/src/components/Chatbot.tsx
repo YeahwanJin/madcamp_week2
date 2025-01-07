@@ -9,7 +9,14 @@ interface Message {
 const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadingMessage, setLoadingMessage] = useState<string>('프로틴 먹는 중...');
+
+  const loadingMessages = [
+    '프로틴 먹는 중...',
+    '벤치프레스 하는 중...',
+    '유산소 하는 중...',
+  ];
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -18,7 +25,10 @@ const Chatbot: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     setInput('');
-    setIsLoading(true); // 로딩 상태 활성화
+    setIsLoading(true);
+
+    // 랜덤으로 로딩 메시지 설정
+    setLoadingMessage(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
 
     try {
       const response = await fetch('http://143.248.194.196:3000/chat', {
@@ -35,7 +45,7 @@ const Chatbot: React.FC = () => {
       const botMessage: Message = { sender: 'bot', content: 'Error: Unable to fetch response.' };
       setMessages((prev) => [...prev, botMessage]);
     } finally {
-      setIsLoading(false); // 로딩 상태 비활성화
+      setIsLoading(false);
     }
   };
 
@@ -105,7 +115,7 @@ const Chatbot: React.FC = () => {
               </Paper>
             </ListItem>
           ))}
-          {isLoading && ( // 로딩 중 상태 표시
+          {isLoading && (
             <ListItem sx={{ justifyContent: 'flex-start' }}>
               <Paper
                 elevation={2}
@@ -118,7 +128,7 @@ const Chatbot: React.FC = () => {
                   fontStyle: 'italic',
                 }}
               >
-                <ListItemText primary="프로틴 먹는 중..." />
+                <ListItemText primary={loadingMessage} />
               </Paper>
             </ListItem>
           )}

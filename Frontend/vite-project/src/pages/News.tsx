@@ -28,13 +28,18 @@ const News = () => {
     setQuery(tag); // 태그 클릭 시 검색어 변경
   };
 
+  // HTML 엔티티를 디코딩하는 함수
+  const decodeHtmlEntities = (str) => {
+    return str.replace(/&quot;/g, '"');
+  };
+
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>News</h1>
 
       {/* 태그 버튼 */}
       <div style={styles.tagContainer}>
-        {["헬스", "운동", "건강"].map((tag) => (
+        {["헬스", "운동", "건강", "보디빌딩", "필라테스"].map((tag) => (
           <button
             key={tag}
             onClick={() => handleTagClick(tag)}
@@ -61,10 +66,10 @@ const News = () => {
                 rel="noopener noreferrer"
                 style={styles.newsTitle}
               >
-                {item.title.replace(/<\/?[^>]+(>|$)/g, "")}
+                {decodeHtmlEntities(item.title.replace(/<\/?[^>]+(>|$)/g, ""))}
               </a>
               <p style={styles.newsDescription}>
-                {item.description.replace(/<\/?[^>]+(>|$)/g, "")}
+                {decodeHtmlEntities(item.description.replace(/<\/?[^>]+(>|$)/g, ""))}
               </p>
             </li>
           ))}
@@ -122,6 +127,7 @@ const styles = {
       backgroundColor: "#fff",
       borderRadius: "8px",
       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      textAlign: "left", // 뉴스 항목 왼쪽 정렬
     },
     newsTitle: {
       fontSize: "18px",
@@ -130,11 +136,13 @@ const styles = {
       textDecoration: "none",
       marginBottom: "8px",
       display: "block",
+      textAlign: "center"
     },
     newsDescription: {
       fontSize: "14px",
       color: "#333",
       lineHeight: "1.6",
+      textAlign: "left", // 뉴스 설명 왼쪽 정렬
     },
   };
 
