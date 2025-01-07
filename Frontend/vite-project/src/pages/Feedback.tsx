@@ -9,6 +9,7 @@ interface PostType {
   _id: string;
   title: string;
   content: string;
+  imageUrl?: string; // 이미지 URL 필드 추가
   likes: number;
   likedBy: string[];
   authorId: {
@@ -28,7 +29,16 @@ const Feedback: React.FC = () => {
       try {
         const response = await fetch("http://143.248.194.196:3000/posts");
         const data = await response.json();
-        setPosts(data);
+
+        // 이미지 URL을 서버 경로와 함께 설정
+        const updatedPosts = data.map((post: PostType) => ({
+          ...post,
+          imageUrl: post.imageUrl
+            ? `http://143.248.194.196:3000${post.imageUrl}`
+            : undefined,
+        }));
+
+        setPosts(updatedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -44,7 +54,15 @@ const Feedback: React.FC = () => {
       try {
         const response = await fetch("http://143.248.194.196:3000/posts");
         const data = await response.json();
-        setPosts(data);
+
+        const updatedPosts = data.map((post: PostType) => ({
+          ...post,
+          imageUrl: post.imageUrl
+            ? `http://143.248.194.196:3000${post.imageUrl}`
+            : undefined,
+        }));
+
+        setPosts(updatedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -55,15 +73,20 @@ const Feedback: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://143.248.194.196:3000/posts/search?query=${encodeURIComponent(searchQuery)}`
+        `http://143.248.194.196:3000/posts/search?query=${encodeURIComponent(
+          searchQuery
+        )}`
       );
       const data = await response.json();
 
-      if (data.length > 0) {
-        setPosts(data); // 검색된 게시물 업데이트
-      } else {
-        setPosts([]); // 검색 결과가 없으면 빈 배열로 설정
-      }
+      const updatedPosts = data.map((post: PostType) => ({
+        ...post,
+        imageUrl: post.imageUrl
+          ? `http://143.248.194.196:3000${post.imageUrl}`
+          : undefined,
+      }));
+
+      setPosts(updatedPosts);
     } catch (error) {
       console.error("Error searching posts:", error);
     }
@@ -92,6 +115,7 @@ const Feedback: React.FC = () => {
           </button>
         </div>
       </div>
+
       <h1>Feedback</h1>
       <div className="post-list">
         {isSearching && posts.length === 0 ? (
@@ -104,6 +128,7 @@ const Feedback: React.FC = () => {
               username={post.authorId.name}
               title={post.title}
               content={post.content}
+              imageUrl={post.imageUrl} // 이미지 URL 전달
               likes={post.likes}
               likedBy={post.likedBy}
             />

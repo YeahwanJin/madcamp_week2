@@ -10,9 +10,10 @@ interface PostProps {
   content: string;
   likes: number;
   likedBy: string[]; // 좋아요 누른 유저 목록 추가
+  imageUrl?: string; // 이미지 URL 추가
 }
 
-const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, likedBy }) => {
+const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, likedBy, imageUrl }) => {
   const navigate = useNavigate();
   const [likeCount, setLikeCount] = useState(likes);
   const [liked, setLiked] = useState(false); // 좋아요 상태 관리
@@ -27,7 +28,7 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
 
   // 게시물 클릭 시 상세 페이지로 이동
   const handleClick = () => {
-    navigate(`/posts/${_id}`, { state: { username, title, content } });
+    navigate(`/posts/${_id}`, { state: { username, title, content, imageUrl } });
   };
 
   // 좋아요 버튼 클릭
@@ -57,10 +58,18 @@ const Post: React.FC<PostProps> = ({ _id, username, title, content, likes, liked
 
   return (
     <div className="post" onClick={handleClick}>
-      <div className="post-header"></div>
-      <div className="user-avatar"></div>
-      <span className="username">{username}</span>
+      <div className="post-header">
+        <div className="user-avatar"></div>
+        <span className="username">{username}</span>
+      </div>
       <div className="post-content">
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Post"
+            className="post-image"
+          />
+        )}
         <p className="title">{title}</p>
         <p className="content">{content}</p>
         <div className="post-footer">

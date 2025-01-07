@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 훅 가져오기
-import "../styles/Write.css"; // CSS 파일 가져오기
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Font Awesome 아이콘 가져오기
-import { faPlus } from "@fortawesome/free-solid-svg-icons"; // "+" 아이콘 가져오기
+import { useNavigate } from "react-router-dom";
+import "../styles/Write.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Write: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  const navigate = useNavigate(); // useNavigate 초기화
-  
-  const author=JSON.parse(sessionStorage.getItem("user") || "{}");
-  const authorId = author._id ? author._id : "677a32f4ae0a8ba26c65c9f0"; // 세션에 사용자 ID가 없으면 기본값 사용
-  //const authorId = "677a32f4ae0a8ba26c65c9f0";
+  const [imageFile, setImageFile] = useState<File | null>(null); // 이미지 파일 상태
+  const navigate = useNavigate();
+
+  const author = JSON.parse(sessionStorage.getItem("user") || "{}");
+  const authorId = author._id ? author._id : "677a32f4ae0a8ba26c65c9f0";
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -26,26 +26,31 @@ const Write: React.FC = () => {
     setVideoUrl(e.target.value);
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImageFile(file);
+  };
+
   const handleUpload = async () => {
     if (!title || !content) {
       alert("제목과 내용을 입력해주세요!");
       return;
     }
 
-    const postData = {
-      title,
-      content,
-      videoUrl,
-      authorId,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("videoUrl", videoUrl);
+    formData.append("authorId", authorId);
+
+    if (imageFile) {
+      formData.append("image", imageFile); // 이미지 파일 추가
+    }
 
     try {
       const response = await fetch("http://143.248.194.196:3000/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
+        body: formData, // FormData 전송
       });
 
       if (!response.ok) {
@@ -60,6 +65,7 @@ const Write: React.FC = () => {
       setTitle("");
       setContent("");
       setVideoUrl("");
+      setImageFile(null);
 
       // /feedback 페이지로 이동
       navigate("/feedback");
@@ -96,6 +102,14 @@ const Write: React.FC = () => {
           placeholder="비디오 URL 입력"
           value={videoUrl}
           onChange={handleVideoUrlChange}
+        />
+      </div>
+      <div className="input-container">
+        <input
+          className="file-input"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange} // 이미지 파일 핸들러 추가
         />
       </div>
       <button className="upload-button" onClick={handleUpload}>
