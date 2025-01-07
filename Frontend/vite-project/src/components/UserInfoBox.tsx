@@ -45,7 +45,7 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
   return (
     <div className="user-info">
       <img
-        className="user-logo"
+        className="user-icon"
         src={userImage}
         alt={`${level} logo`}
         style={{

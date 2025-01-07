@@ -31,7 +31,6 @@ const UserRankingBox: React.FC = () => {
     fetchRankings();
   }, []);
 
-  // 레벨에 따른 이미지 결정 함수
   const getLevelImage = (level: 'Bronze' | 'Silver' | 'Gold') => {
     switch (level) {
       case 'Gold':
@@ -41,7 +40,7 @@ const UserRankingBox: React.FC = () => {
       case 'Bronze':
         return Minilog2;
       default:
-        return Minilog2; // 기본값
+        return Minilog2;
     }
   };
 
@@ -51,29 +50,22 @@ const UserRankingBox: React.FC = () => {
     <div className="ranking-box">
       <h2>유저 랭킹</h2>
       <ul>
-        {rankings.map((user, index) => {
-          const levelImage = getLevelImage(user.level);
-          return (
-            <li key={index}>
-              <div className="info-left">
-                <span>{index + 1}.</span>
-                <img
-                  className="user-logo"
-                  src={levelImage}
-                  alt={`${user.level} Logo`}
-                  style={{
-                    borderRadius: "5px",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
-                  }}
-                />
-                <span>{user.name}</span>
-              </div>
-              <div className="info-right">
-                <span>{user.points} g</span>
-              </div>
-            </li>
-          );
-        })}
+        {rankings.map((user, index) => (
+          <li key={index}>
+            <div className="info-left">
+              <span>{index + 1}.</span>
+              <img
+                className="user-logo"
+                src={getLevelImage(user.level)}
+                alt={`${user.level} Logo`}
+              />
+              <span>{user.name}</span>
+            </div>
+            <div className="info-right">
+              <span>{user.points} g</span>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
