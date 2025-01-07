@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import VideoCarousel from "../components/VideoCarousel"; // 비디오 캐러셀 임포트
+import HeroSection from "../components/HeroSection"; // HeroSection 컴포넌트 임포트
+import "../styles/Home.css"; // Home.css 추가
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +21,9 @@ const Home: React.FC = () => {
   }, [navigate]);
 
   return (
+    
     <div>
+      <HeroSection />
       <VideoCarousel />
     </div>
   );

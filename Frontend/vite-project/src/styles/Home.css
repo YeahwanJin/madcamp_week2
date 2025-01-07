@@ -1,0 +1,12 @@
+/* Home 컴포넌트 전체 스타일 */
+.home {
+    display: flex;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: center; /* 콘텐츠 중앙 정렬 */
+  }
+  
+  /* HeroSection과 VideoCarousel 간격 설정 */
+  .hero-section + .video-carousel {
+    margin-top: 50px; /* 간격 설정 */
+  }
+  

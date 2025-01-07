@@ -130,7 +130,10 @@ const Post: React.FC<PostProps> = ({
           </button>
           <button
             className="comment-button"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) => {
+              event.stopPropagation(); // 부모로 클릭 이벤트 전파 방지
+              handleClick(); // 상세 페이지로 이동
+            }}
           >
             <FontAwesomeIcon icon={faComment} className="icon" /> Comment
           </button>
