@@ -13,7 +13,7 @@ import Chatbot from "./components/Chatbot.tsx"
 import VideoCarousel from "./components/VideoCarousel"; // VideoCarousel 컴포넌트 임포트
 import Home from "./pages/Home.tsx"
 import Trainers from "./pages/Trainers.tsx"
-import TrainerDetail from './pages/TrainerDetail';
+import TrainerDetail from './pages/TrainerDetail.tsx';
 
 function App() {
   return (

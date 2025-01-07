@@ -1,4 +1,4 @@
-/* src/components/Navbar.css */
+
 
 .navbar {
     display: flex; /*로고 링크 정렬*/
@@ -50,5 +50,5 @@
     color: #000000; /* 호버 시 색상 변경 */
     font-weight: bold; /* 글씨를 더 굵게 */
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 살짝 진해 보이는 효과 */
-}
   
+}
