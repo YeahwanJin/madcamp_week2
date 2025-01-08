@@ -1,8 +1,42 @@
 .my-page {
-    display: flex;
-    justify-content: space-between; /* 좌우 배치 */
-    align-items: flex-start;
-    padding: 20px;
-    gap: 20px;
-  }
+  padding: 20px;
   
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.tab-buttons button {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 20px;
+  position: relative; /* 아래 줄을 표시하기 위한 기준점 설정 */
+}
+
+
+.tab-buttons button.active {
+  background: #b5b7c7;
+  color: white;
+}
+
+.tab-content {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.tab-pane {
+  display: none; /* 기본적으로 콘텐츠 숨김 */
+}
+
+.tab-pane.active {
+  display: block; /* 활성화된 콘텐츠만 표시 */
+}
