@@ -178,6 +178,20 @@ const Postpage1: React.FC = () => {
     setCommentContent("");
     setPointsGiven(1);
   };
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      console.log("댓글삭제")
+      console.log(commentId)
+      await axios.delete(`http://143.248.194.196:3000/posts/comments/${commentId}`);
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
+      alert("댓글이 삭제되었습니다.");
+    } catch (error) {
+      console.error("Failed to delete comment:", error);
+      alert("댓글 삭제에 실패했습니다.");
+    }
+  };
   const handleDeletePost = async () => {
     if (!postId) {
       alert("게시글 정보를 찾을 수 없습니다.");
@@ -327,6 +341,14 @@ const Postpage1: React.FC = () => {
                 />
                   <p>작성자: {comment.commenterId.name}</p>
                   <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+                  {comment.commenterId._id === commenterId && (
+                  <button
+                    className="delete-comment-button"
+                    onClick={() => handleDeleteComment(comment._id)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} className="trash-icon" style={{ fontSize: '0.6rem' }} />
+                  </button>
+                )}
                 </div>
                 <p>{comment.content}</p>
                 <div className="point-info">
