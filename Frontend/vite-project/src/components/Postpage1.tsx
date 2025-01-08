@@ -185,8 +185,6 @@ const Postpage1: React.FC = () => {
     }
 
     try {
-      console.log("삭제")
-      console.log(postId);
       await axios.delete(`http://143.248.194.196:3000/posts/${postId}`);
       alert("게시글이 성공적으로 삭제되었습니다.");
       navigate("/feedback"); // 삭제 후 메인 페이지로 이동
@@ -246,10 +244,18 @@ const Postpage1: React.FC = () => {
           alt="작성자 레벨 아이콘"
           className="user-avatar"
         />
+        <div className="post-meta">
         <p className="post-author">{post.authorId.name}</p>
         <p className="post-date">
           {new Date(post.createdAt).toLocaleDateString()}
         </p>
+        {commenterId === post.authorId._id && (
+        <button className="delete-post-button" onClick={handleDeletePost}>
+          <FontAwesomeIcon icon={faTrash} className="trash-icon" style={{ fontSize: '0.6rem' }} />
+        </button>
+      )}
+      </div>
+        
       </div>
       <h1 className="post-title">{post.title}</h1>
       {post.imageUrl && (
@@ -266,11 +272,7 @@ const Postpage1: React.FC = () => {
         />
       )}
       <p className="post-content">{post.content}</p>
-      {commenterId === post.authorId._id && (
-        <button className="delete-post-button" onClick={handleDeletePost}>
-          <FontAwesomeIcon icon={faTrash} /> 삭제
-        </button>
-      )}
+
       <div className="post-likes">
         <button
           className={`like-button ${liked ? "liked" : ""}`}
