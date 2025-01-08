@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/FavoriteTrainersBox.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Trainer {
   _id: string;
@@ -17,6 +19,7 @@ const FavoriteTrainersBox: React.FC = () => {
     const fetchFavoriteTrainers = async () => {
       const user = JSON.parse(sessionStorage.getItem('user') || '{}');
       const userId = user._id;
+    
 
       if (!userId) {
         console.error('세션에 사용자 ID가 없습니다.');
@@ -72,26 +75,24 @@ const FavoriteTrainersBox: React.FC = () => {
 
   return (
     <div className="favorite-trainers-box">
-      <h2>나의 관심 트레이너</h2>
+      <h2 className='h2jin'>나의 관심 트레이너</h2>
       {favoriteTrainers.length > 0 ? (
-        <ul>
+        <ul className='uljin'>
           {favoriteTrainers.map((trainer) => (
             <li key={trainer._id} className="favorite-trainer-item">
-              <img
-                className="trainer-image"
-                src={trainer.image}
-                alt={trainer.name}
-              />
-              <div className="trainer-info">
-                <h3>{trainer.name}</h3>
-                <p>{trainer.shortDescription}</p>
-                <span>전문 분야: {trainer.category}</span>
+              <div className="trainer-top">
+                <img className="trainer-image" src={trainer.image} alt={trainer.name} />
                 <button
                   className="remove-button"
                   onClick={() => handleRemoveTrainer(trainer._id)}
                 >
-                  삭제
+                  <FontAwesomeIcon icon={faTrash} />
                 </button>
+              </div>
+              <div className="trainer-info">
+                <h3>{trainer.name}</h3>
+                <p>{trainer.shortDescription}</p>
+                <span>전문 분야: {trainer.category}</span>
               </div>
             </li>
           ))}

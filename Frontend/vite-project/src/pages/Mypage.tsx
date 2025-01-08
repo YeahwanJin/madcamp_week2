@@ -13,6 +13,7 @@ interface UserData {
 const MyPage: React.FC = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [activeTab, setActiveTab] = useState<'trainers' | 'ranking'>('trainers'); // 현재 활성화된 탭
 
   useEffect(() => {
     const updateAllUserLevels = async () => {
@@ -30,7 +31,6 @@ const MyPage: React.FC = () => {
     const fetchUserData = async () => {
       const user = JSON.parse(sessionStorage.getItem('user') || '{}');
       const userId = user._id;
-
       if (!userId) {
         console.error('세션에 사용자 ID가 없습니다.');
         setLoading(false);
@@ -64,10 +64,34 @@ const MyPage: React.FC = () => {
 
   return (
     <div className="my-page">
+      {/* 상단 User Info Box */}
       <UserInfoBox name={name} points={points} level={level} />
-      <div className='my-page-content'></div>
-      <UserRankingBox />
-      <FavoriteTrainersBox />
+
+      {/* 탭 버튼 */}
+      <div className="tab-buttons">
+        <button
+          className={activeTab === 'trainers' ? 'active' : ''}
+          onClick={() => setActiveTab('trainers')}
+        >
+          등록한 수업
+        </button>
+        <button
+          className={activeTab === 'ranking' ? 'active' : ''}
+          onClick={() => setActiveTab('ranking')}
+        >
+          유저 랭킹
+        </button>
+      </div>
+
+      {/* 탭 콘텐츠 */}
+      <div className="tab-content">
+        <div className={activeTab === 'trainers' ? 'tab-pane active' : 'tab-pane'}>
+          <FavoriteTrainersBox />
+        </div>
+        <div className={activeTab === 'ranking' ? 'tab-pane active' : 'tab-pane'}>
+          <UserRankingBox />
+        </div>
+      </div>
     </div>
   );
 };

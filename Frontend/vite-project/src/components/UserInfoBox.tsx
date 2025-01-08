@@ -1,6 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCrown, faMedal, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../styles/UserInfoBox.css'; // 별도 CSS 파일 생성
 import Logo1 from "../assets/logo1.png";
 import Logo2 from "../assets/logo2.png";
@@ -26,6 +24,7 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
         return Logo2; // 기본 로고 (Bronze로 설정)
     }
   };
+  
   const getUserTitle = (level: 'Bronze' | 'Silver' | 'Gold') => {
     switch (level) {
       case 'Gold':
@@ -38,25 +37,28 @@ const UserInfoBox: React.FC<UserInfoBoxProps> = ({ name, points, level }) => {
         return '';
     }
   };
-  
 
   const userImage = getUserImage(level);
 
   return (
     <div className="user-info">
-      <img
-        className="user-icon"
-        src={userImage}
-        alt={`${level} logo`}
-        style={{
-          borderRadius: "15px",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
-        }}
-      />
-      <div className="user-details">
-        <p><strong>이름:</strong> {name}</p>
-        <p><strong>포인트:</strong> {points}</p>
-        <p><strong>등급:</strong> {getUserTitle(level)}</p>
+      <div className="user-row">
+        <img
+          className="user-icon"
+          src={userImage}
+          alt={`${level} logo`}
+          style={{
+            borderRadius: "50px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
+          }}
+        />
+        <div className="user-meta">
+          <p className="user-name">{name}</p>
+          <div className="user-level-points">
+            <p className="user-level">{getUserTitle(level)}</p>
+            <p className="user-points">프로틴: {points}g</p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -3,11 +3,10 @@
   border: none;
   border-radius: 10px;
   padding: 15px; /* 패딩 줄임 */
-  width: 320px; /* 폭 줄임 */
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+  width: 800px; /* 폭 줄임 */
   font-family: 'Arial', sans-serif;
   color: #333333;
-  margin-top: 80px; /* 네비게이션 바 높이에 맞춰 여백 추가 */
+  margin-top: -10px; /* 네비게이션 바 높이에 맞춰 여백 추가 */
 }
 
 .ranking-box h2 {
