@@ -47,7 +47,8 @@ const Postpage1: React.FC = () => {
 
   const storedUser = sessionStorage.getItem("user");
   const commenter = storedUser ? JSON.parse(storedUser) : null;
-  const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
+  //const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
+  const commenterId = commenter?._id
   const navigate = useNavigate();
   useEffect(() => {
     // 작성자 레벨 가져오기
