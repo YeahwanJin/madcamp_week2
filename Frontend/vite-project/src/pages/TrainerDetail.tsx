@@ -52,7 +52,7 @@ const TrainerDetail: React.FC = () => {
           `http://143.248.194.196:3000/users/${user._id}/favoriteTrainers`
         );
         const favoriteTrainers = response.data;
-        setIsFavorite(favoriteTrainers.includes(trainer._id)); // _id로 확인
+        setIsFavorite(favoriteTrainers.some((fav) => fav._id === trainer._id)); // _id로 확인
       } catch (error) {
         console.error("Error checking favorite status:", error);
       }
@@ -68,8 +68,6 @@ const TrainerDetail: React.FC = () => {
     }
 
     try {
-        console.log("hello");
-        console.log(user._id,trainer?._id);
       await axios.post(
         `http://143.248.194.196:3000/users/${user._id}/favoriteTrainers/${trainer?._id}`
       );
@@ -108,7 +106,7 @@ const TrainerDetail: React.FC = () => {
             <button
               className={`favorite-button ${isFavorite ? "favorited" : ""}`}
               onClick={handleAddToFavorites}
-              disabled={isFavorite}
+              disabled={isFavorite} // 비활성화 처리
             >
               {isFavorite ? "Already Added" : "Add to Favorites"}
             </button>
