@@ -59,7 +59,7 @@ const UserRankingBox: React.FC = () => {
                 src={getLevelImage(user.level)}
                 alt={`${user.level} Logo`}
               />
-              <span>{user.name}</span>
+              <span style={{ fontWeight: 'bold' }}>{user.name}</span>
             </div>
             <div className="info-right">
               <span>{user.points} g</span>

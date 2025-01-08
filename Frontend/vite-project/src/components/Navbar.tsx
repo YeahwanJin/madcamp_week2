@@ -32,8 +32,9 @@ function Navbar() {
           <Link to="/feedback">Feedback</Link>
           <Link to="/trainers">Trainers</Link>
           <Link to="/chatbot">Chat</Link>
-          <Link to="/mypage">Mypage</Link>
           <Link to="/news">News</Link>
+          <Link to="/mypage">Mypage</Link>
+        
 
           {isLoggedIn ? (
           <Link to="/" onClick={handleLogout} className="navbar-link">
