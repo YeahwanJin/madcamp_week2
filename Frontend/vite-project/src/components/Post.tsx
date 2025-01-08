@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faComment } from "@fortawesome/free-solid-svg-icons";
-import Minilog1 from "../assets/minilogo1.png";
-import Minilog2 from "../assets/minilogo2.png";
-import Minilog3 from "../assets/minilogo3.png";
+import Minilog1 from  "../assets/logo1.jpg";
+import Minilog2 from  "../assets/logo2.jpg";;
+import Minilog3 from "../assets/logo3.png";
 
 
 interface PostProps {

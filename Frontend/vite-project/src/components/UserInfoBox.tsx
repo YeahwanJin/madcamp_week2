@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/UserInfoBox.css'; // 별도 CSS 파일 생성
-import Logo1 from "../assets/logo1.png";
-import Logo2 from "../assets/logo2.png";
+import Logo1 from "../assets/logo1.jpg";
+import Logo2 from "../assets/logo2.jpg";
 import Logo3 from "../assets/logo3.png";
 
 interface UserInfoBoxProps {
