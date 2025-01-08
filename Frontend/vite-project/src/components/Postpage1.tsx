@@ -169,6 +169,7 @@ const Postpage1: React.FC = () => {
       setCommentContent("");
       setPointsGiven(1);
       alert("댓글이 성공적으로 작성되었습니다!");
+      window.location.reload(); // 새로고침 추가
     } catch (error) {
       console.error("Failed to submit comment:", error);
       alert("댓글 작성에 실패했습니다.");
