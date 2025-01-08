@@ -68,7 +68,7 @@ const TrainerDetail: React.FC = () => {
     }
 
     try {
-        console.log("hello")
+        console.log("hello");
         console.log(user._id,trainer?._id);
       await axios.post(
         `http://143.248.194.196:3000/users/${user._id}/favoriteTrainers/${trainer?._id}`

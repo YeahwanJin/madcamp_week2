@@ -1,0 +1,62 @@
+.favorite-trainers-box {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .favorite-trainers-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .favorite-trainers-box ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .favorite-trainer-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .favorite-trainer-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .trainer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .trainer-info h3 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .trainer-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .trainer-info span {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  .favorite-trainers-box .remove-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .favorite-trainers-box .remove-button:hover {
+    background-color: #cc0000;
+  }

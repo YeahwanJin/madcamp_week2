@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserInfoBox from '../components/UserInfoBox'; // 분리된 컴포넌트 import
 import UserRankingBox from '../components/UserRankingBox';
-
+import FavoriteTrainersBox from '../components/FavoriteTrainersBox';
 import '../styles/Mypage.css';
 
 interface UserData {
@@ -65,7 +65,9 @@ const MyPage: React.FC = () => {
   return (
     <div className="my-page">
       <UserInfoBox name={name} points={points} level={level} />
+      <div className='my-page-content'></div>
       <UserRankingBox />
+      <FavoriteTrainersBox />
     </div>
   );
 };
