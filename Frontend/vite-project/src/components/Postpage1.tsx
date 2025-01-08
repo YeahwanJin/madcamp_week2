@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Postpage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Minilog1 from "../assets/minilogo1.png";
 import Minilog2 from "../assets/minilogo2.png";
 import Minilog3 from "../assets/minilogo3.png";
-
+import { useNavigate } from 'react-router-dom';
 
 interface Post {
   _id: string;
@@ -48,7 +48,7 @@ const Postpage1: React.FC = () => {
   const storedUser = sessionStorage.getItem("user");
   const commenter = storedUser ? JSON.parse(storedUser) : null;
   const commenterId = commenter?._id ?? "677a32f4ae0a8ba26c65c9f0";
-
+  const navigate = useNavigate();
   useEffect(() => {
     // 작성자 레벨 가져오기
     const fetchAuthorLevel = async () => {
@@ -178,7 +178,23 @@ const Postpage1: React.FC = () => {
     setCommentContent("");
     setPointsGiven(1);
   };
+  const handleDeletePost = async () => {
+    if (!postId) {
+      alert("게시글 정보를 찾을 수 없습니다.");
+      return;
+    }
 
+    try {
+      console.log("삭제")
+      console.log(postId);
+      await axios.delete(`http://143.248.194.196:3000/posts/${postId}`);
+      alert("게시글이 성공적으로 삭제되었습니다.");
+      navigate("/feedback"); // 삭제 후 메인 페이지로 이동
+    } catch (error) {
+      console.error("게시글 삭제 실패:", error);
+      alert("게시글 삭제에 실패했습니다.");
+    }
+  };
   const handleLike = async () => {
     if (!commenterId) {
       alert("로그인이 필요합니다.");
@@ -250,7 +266,11 @@ const Postpage1: React.FC = () => {
         />
       )}
       <p className="post-content">{post.content}</p>
-
+      {commenterId === post.authorId._id && (
+        <button className="delete-post-button" onClick={handleDeletePost}>
+          <FontAwesomeIcon icon={faTrash} /> 삭제
+        </button>
+      )}
       <div className="post-likes">
         <button
           className={`like-button ${liked ? "liked" : ""}`}
